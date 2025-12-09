@@ -1,0 +1,44 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("admin") // "superadmin" or "admin"
+  createdAt DateTime @default(now())
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+}
+
+model Registration {
+  id                 Int       @id @default(autoincrement())
+  name               String
+  email              String
+  mobile             String
+  collegeId          String?
+  selectedEvents     Int[]
+  eventCodes         String?
+  eventNames         String?
+  eventDetails       Json?
+  totalAmount        Float
+  registrationToken  String    @unique
+  paymentReceipt     String
+  paymentVerified    Boolean   @default(false)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  
+  // Add relationship to Admin
+  adminId   Int?
+}
