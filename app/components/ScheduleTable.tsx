@@ -147,7 +147,10 @@ export default function ScheduleTable() {
   };
 
   return (
-    <section className="py-12 bg-gradient-to-br from-slate-900 via-purple-900 to-blue-900">
+    <section
+      id="schedule"
+      className="py-12 bg-gradient-to-br from-slate-900 via-purple-900 to-blue-900"
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-10">

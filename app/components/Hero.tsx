@@ -13,6 +13,7 @@ import {
   Code,
   Trophy,
 } from "lucide-react";
+import Link from "next/link";
 
 export default function Hero() {
   const [timeLeft, setTimeLeft] = useState({
@@ -77,7 +78,10 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-blue-900 pt-10">
+    <section
+      id="hero"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-linear-to-br from-slate-900 via-purple-900 to-blue-900 pt-10"
+    >
       {/* Animated Background Elements */}
       <div className="absolute inset-0">
         {/* Floating particles */}
@@ -185,12 +189,12 @@ export default function Hero() {
               //     value: "University Main Campus",
               //     color: "text-pink-400",
               //   },
-              {
-                icon: Users,
-                label: "Participants",
-                value: "500+",
-                color: "text-purple-400",
-              },
+              // {
+              //   icon: Users,
+              //   label: "Participants",
+              //   value: "500+",
+              //   color: "text-purple-400",
+              // },
               //   {
               //     icon: Clock,
               //     label: "Duration",
@@ -235,20 +239,24 @@ export default function Hero() {
             variants={itemVariants}
             className="flex flex-col sm:flex-row gap-6 justify-center mb-16"
           >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-18 py-3 bg-gradient-to-r from-yellow-500 to-pink-500 text-white font-bold text-lg rounded-full hover:shadow-2xl hover:shadow-yellow-500/30 transition-all duration-300"
-            >
-              Register Now
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-18 py-3 bg-white/10 backdrop-blur-sm text-white font-bold text-lg rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300"
-            >
-              View Schedule
-            </motion.button>
+            <Link href="/register">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-18 py-3 bg-gradient-to-r from-yellow-500 to-pink-500 text-white font-bold text-lg rounded-full hover:shadow-2xl hover:shadow-yellow-500/30 transition-all duration-300"
+              >
+                Register Now
+              </motion.button>
+            </Link>
+            <Link href="/schedule">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-18 py-3 bg-white/10 backdrop-blur-sm text-white font-bold text-lg rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300"
+              >
+                View Schedule
+              </motion.button>
+            </Link>
           </motion.div>
         </motion.div>
       </div>

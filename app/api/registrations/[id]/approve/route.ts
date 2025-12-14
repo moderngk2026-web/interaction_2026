@@ -5,7 +5,7 @@ import nodemailer from "nodemailer";
 // Get email credentials from environment variables
 const emailUser = process.env.EMAIL_USER;
 const emailPassword = process.env.EMAIL_PASSWORD;
-const emailFrom = process.env.EMAIL_FROM || "noreply@eventhub.com";
+const emailFrom = process.env.EMAIL_FROM || "noreply@Interaction.com";
 
 // Configure email transporter with Gmail
 const transporter = nodemailer.createTransport({
@@ -100,11 +100,11 @@ export async function POST(
     // Send email
     try {
       const textContent = `
-Registration Approved - EventHub 2026
+Registration Approved - Interaction 2026
 
 Hello ${name},
 
-We are pleased to inform you that your registration for EventHub 2026 has been approved!
+We are pleased to inform you that your registration for Interaction 2026 has been approved!
 
 Registration Details:
 • Name: ${name}
@@ -117,7 +117,7 @@ IMPORTANT: Please keep your registration token safe. You will need it for event 
 We look forward to seeing you at the event!
 
 Best regards,
-EventHub Team
+Interaction Team
       `;
 
       const htmlContent = `
@@ -137,7 +137,7 @@ EventHub Team
         <h2 style="color: #333; margin-top: 0;">Hello ${name},</h2>
         
         <p style="color: #666; font-size: 16px; line-height: 1.6;">
-            We are pleased to inform you that your registration for <strong>EventHub 2026</strong> has been approved!
+            We are pleased to inform you that your registration for <strong>Interaction 2026</strong> has been approved!
         </p>
         
         <div style="background: white; border: 2px solid #e0e0e0; border-radius: 8px; padding: 20px; margin: 25px 0;">
@@ -180,7 +180,7 @@ EventHub Team
         <div style="text-align: center; margin-top: 30px; padding: 20px; background: #f5f5f5; border-radius: 8px;">
             <p style="margin: 0; color: #666; font-size: 14px;">
                 This is an automated message. Please do not reply to this email.<br>
-                © ${new Date().getFullYear()} EventHub. All rights reserved.
+                © ${new Date().getFullYear()} Interaction. All rights reserved.
             </p>
         </div>
     </div>
@@ -189,9 +189,9 @@ EventHub Team
       `;
 
       const mailOptions = {
-        from: `"EventHub" <${emailFrom}>`,
+        from: `"Interaction" <${emailFrom}>`,
         to: email,
-        subject: "🎉 Registration Approved - EventHub 2026",
+        subject: "🎉 Registration Approved - Interaction 2026",
         text: textContent,
         html: htmlContent,
       };

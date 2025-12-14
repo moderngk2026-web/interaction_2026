@@ -13,8 +13,8 @@ interface NavItem {
 const navItems: NavItem[] = [
   { name: "Home", href: "/" },
   { name: "Events", href: "/events" },
+  { name: "Our Team", href: "/our-team" },
   { name: "Schedule", href: "/schedule" },
-  // { name: "Speakers", href: "/speakers" },
   // { name: "Sponsors", href: "/sponsors" },
   { name: "Contact", href: "/contact" },
 ];
@@ -49,12 +49,12 @@ export default function Navbar() {
           >
             <div className="relative">
               {/* Decorative element */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-yellow-500 to-pink-500 rounded-full blur opacity-30"></div>
+              {/* <div className="absolute  rounded-full blur opacity-30"></div> */}
               <Link
                 href="/"
                 className="relative flex flex-col items-center justify-center"
               >
-                <span className="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-pink-500 bg-clip-text text-transparent font-['Impact'] tracking-wider">
+                <span className="text-3xl font-normal bg-gradient-to-r from-yellow-400 to-red-400 bg-clip-text text-transparent font-['Impact'] tracking-wider">
                   Interaction
                 </span>
                 <span

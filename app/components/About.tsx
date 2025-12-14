@@ -83,7 +83,10 @@ export default function AboutSectionWithImages() {
   ];
 
   return (
-    <section className="py-12 bg-gradient-to-b from-white to-gray-50">
+    <section
+      id="about"
+      className="py-12 bg-gradient-to-b from-white to-gray-50"
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-10">
@@ -237,7 +240,7 @@ export default function AboutSectionWithImages() {
                 </p>
 
                 {/* Timeline Visual */}
-                <div className="bg-white rounded-xl p-4 border border-gray-200">
+                {/* <div className="bg-white rounded-xl p-4 border border-gray-200">
                   <div className="flex items-center justify-between mb-4">
                     <h4 className="font-semibold text-gray-800">
                       Event Timeline
@@ -275,7 +278,7 @@ export default function AboutSectionWithImages() {
                       </div>
                     ))}
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
 

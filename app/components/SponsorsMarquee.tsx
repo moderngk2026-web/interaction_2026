@@ -48,7 +48,10 @@ export default function SponsorsMarqueeWithImages() {
   ];
 
   return (
-    <section className="py-12 bg-gradient-to-b from-slate-50 to-white">
+    <section
+      id="sponsors"
+      className="py-12 bg-gradient-to-b from-slate-50 to-white"
+    >
       <div className="max-w-6xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-8">

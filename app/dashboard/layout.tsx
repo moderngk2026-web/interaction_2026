@@ -28,7 +28,7 @@ interface SidebarItem {
   label: string;
   href: string;
   badge?: number;
-  allowedRoles: ("superadmin" | "admin")[]; // Define which roles can access this item
+  allowedRoles: ("SuperAdmin" | "Admin")[]; // Define which roles can access this item
 }
 
 export default function DashboardLayout({
@@ -106,39 +106,39 @@ export default function DashboardLayout({
       icon: Home,
       label: "Dashboard",
       href: "/dashboard",
-      allowedRoles: ["superadmin", "admin"],
+      allowedRoles: ["SuperAdmin", "Admin"],
     },
     {
       icon: Users,
       label: "Registrations",
       href: "/dashboard/registrations",
       badge: 24,
-      allowedRoles: ["superadmin", "admin"],
+      allowedRoles: ["SuperAdmin", "Admin"],
     },
     {
       icon: Calendar,
       label: "Events",
       href: "/dashboard/events",
-      allowedRoles: ["superadmin"],
+      allowedRoles: ["SuperAdmin"],
     },
     {
       icon: CreditCard,
       label: "Payments",
       href: "/dashboard/payments",
       badge: 12,
-      allowedRoles: ["superadmin"],
+      allowedRoles: ["SuperAdmin"],
     },
     {
       icon: BarChart,
       label: "Analytics",
       href: "/dashboard/analytics",
-      allowedRoles: ["superadmin"],
+      allowedRoles: ["SuperAdmin"],
     },
     {
       icon: Settings,
       label: "Settings",
       href: "/dashboard/settings",
-      allowedRoles: ["superadmin"],
+      allowedRoles: ["SuperAdmin"],
     },
   ];
 
@@ -264,8 +264,8 @@ export default function DashboardLayout({
                       )}
                       {/* Show lock icon for admin-only items in superadmin view */}
                       {admin.role === "superadmin" &&
-                        item.allowedRoles.includes("admin") &&
-                        !item.allowedRoles.includes("superadmin") && (
+                        item.allowedRoles.includes("Admin") &&
+                        !item.allowedRoles.includes("SuperAdmin") && (
                           <span className="text-blue-400">
                             <Shield className="w-4 h-4" />
                           </span>

@@ -436,7 +436,7 @@ export default function RegistrationForm() {
   const generateUPIString = () => {
     const config = {
       amount: totalAmount,
-      upiId: "gurudesh2204@okhdfcbank",
+      upiId: "7498980121@ybl",
       name: "College Events",
       message: `Registration for ${selectedEvents.length} event(s) - Token: ${registrationToken}`,
     };
@@ -686,7 +686,7 @@ export default function RegistrationForm() {
                         ₹{totalAmount}
                       </div>
                     </div>
-                    {selectedEvents.length > 0 && registrationToken && (
+                    {/* {selectedEvents.length > 0 && registrationToken && (
                       <div className="mt-4 pt-4 border-t border-white/10">
                         <div className="text-white/70 text-sm mb-1">
                           Registration Token:
@@ -716,96 +716,151 @@ export default function RegistrationForm() {
                           XXX
                         </div>
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </div>
 
-                {/* Payment Receipt Upload */}
-                <div className="pt-6 border-t border-white/10">
-                  <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                    <Upload className="w-5 h-5 text-green-400" />
-                    Upload Payment Receipt
-                  </h3>
-                  <p className="text-white/60 text-sm mb-4">
-                    Upload screenshot of payment confirmation
-                  </p>
+                {/* QR Code Display */}
+                <div className="bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
+                  <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                    <QrCode className="w-6 h-6 text-purple-400" />
+                    Payment QR Code
+                  </h2>
 
-                  <Dropzone
-                    onDrop={handleDrop}
-                    accept={{
-                      "image/*": [".jpeg", ".jpg", ".png"],
-                      "application/pdf": [".pdf"],
-                    }}
-                    maxSize={5 * 1024 * 1024} // 5MB
-                    disabled={uploading}
-                  >
-                    {({ getRootProps, getInputProps, isDragActive }) => (
-                      <div
-                        {...getRootProps()}
-                        className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-300 ${
-                          isDragActive
-                            ? "border-yellow-400 bg-yellow-500/10"
-                            : "border-white/20 hover:border-yellow-400 hover:bg-white/5"
-                        } ${uploading ? "opacity-50 cursor-not-allowed" : ""}`}
-                      >
-                        <input {...getInputProps()} />
-                        {uploading ? (
-                          <div className="flex flex-col items-center">
-                            <Loader2 className="w-12 h-12 text-yellow-400 animate-spin mb-4" />
-                            <p className="text-white">Uploading...</p>
+                  {selectedEvents.length > 0 ? (
+                    <div className="space-y-6">
+                      {/* QR Code */}
+                      <div className="flex flex-col items-center justify-center p-8 bg-white/5 rounded-2xl border border-white/10">
+                        <div className="p-4 bg-white rounded-xl mb-4">
+                          <QRCodeCanvas
+                            value={generateUPIString()}
+                            size={200}
+                            level="H"
+                            includeMargin={true}
+                            fgColor="#1e293b"
+                            bgColor="#ffffff"
+                          />
+                        </div>
+                        <div className="text-center">
+                          <div className="text-3xl font-bold text-yellow-400 mb-2">
+                            ₹{totalAmount}
                           </div>
-                        ) : paymentReceipt ? (
-                          <div className="relative">
-                            {receiptPreview ? (
-                              <div className="relative mx-auto w-48 h-48 rounded-lg overflow-hidden border border-white/20">
-                                <img
-                                  src={receiptPreview}
-                                  alt="Receipt preview"
-                                  className="w-full h-full object-contain"
-                                />
-                              </div>
-                            ) : (
-                              <div className="p-4 bg-white/5 rounded-lg">
-                                <div className="text-white font-medium mb-2">
-                                  {paymentReceipt.name}
-                                </div>
-                                <div className="text-white/60 text-sm">
-                                  {(paymentReceipt.size / 1024).toFixed(2)} KB
-                                </div>
-                              </div>
-                            )}
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                removeReceipt();
-                              }}
-                              className="absolute -top-2 -right-2 p-1 bg-red-500 hover:bg-red-600 rounded-full"
-                            >
-                              <X className="w-4 h-4 text-white" />
-                            </button>
+                          <div className="text-white/70 text-sm">
+                            Scan to pay via UPI
                           </div>
-                        ) : (
-                          <div className="space-y-4">
-                            <Upload className="w-12 h-12 text-white/50 mx-auto" />
-                            <div>
-                              <p className="text-white font-medium mb-2">
-                                {isDragActive
-                                  ? "Drop the file here"
-                                  : "Drag & drop payment receipt"}
-                              </p>
-                              <p className="text-white/60 text-sm">
-                                or click to select file
-                              </p>
+                          {registrationToken && (
+                            <div className="mt-2 text-white/50 text-xs">
+                              Token: {registrationToken}
                             </div>
-                            <p className="text-white/50 text-xs">
-                              Supports: JPG, PNG, PDF (Max 5MB)
-                            </p>
-                          </div>
-                        )}
+                          )}
+                        </div>
                       </div>
-                    )}
-                  </Dropzone>
+
+                      {/* Payment Details */}
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div className="text-white/70">Selected Events</div>
+                          <div className="text-white font-medium">
+                            {selectedEvents.length} events
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="text-white/70">Price per Event</div>
+                          <div className="text-white font-medium">₹100</div>
+                        </div>
+                        <div className="h-px bg-white/10"></div>
+                        <div className="flex items-center justify-between">
+                          <div className="text-white font-bold">
+                            Total Amount
+                          </div>
+                          <div className="text-2xl font-bold text-yellow-400">
+                            ₹{totalAmount}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Token Info */}
+                      {registrationToken && (
+                        <div className="p-4 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-xl border border-green-500/20">
+                          <h4 className="text-white font-bold mb-2">
+                            Token Information
+                          </h4>
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <span className="text-white/70">
+                                College Code:
+                              </span>
+                              <span className="text-white font-mono">MCGK</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="text-white/70">Year:</span>
+                              <span className="text-white font-mono">2026</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="text-white/70">
+                                Event Count:
+                              </span>
+                              <span className="text-yellow-400 font-mono">
+                                {selectedEvents.length
+                                  .toString()
+                                  .padStart(2, "0")}
+                              </span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="text-white/70">
+                                Participant #:
+                              </span>
+                              <span className="text-green-400 font-mono">
+                                {registrationToken.slice(-3)}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Payment Instructions */}
+                      <div className="p-4 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl border border-blue-500/20">
+                        <h4 className="text-white font-bold mb-2">
+                          Payment Instructions:
+                        </h4>
+                        <ul className="text-white/70 text-sm space-y-2">
+                          <li className="flex items-start gap-2">
+                            <div className="w-1 h-1 bg-white/50 rounded-full mt-2"></div>
+                            Scan the QR code with any UPI app
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="w-1 h-1 bg-white/50 rounded-full mt-2"></div>
+                            Verify the amount before payment
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="w-1 h-1 bg-white/50 rounded-full mt-2"></div>
+                            Save payment screenshot as receipt
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="w-1 h-1 bg-white/50 rounded-full mt-2"></div>
+                            Upload receipt after successful payment
+                          </li>
+                          {/* <li className="flex items-start gap-2">
+                            <div className="w-1 h-1 bg-white/50 rounded-full mt-2"></div>
+                            Mention token {registrationToken} in payment note if
+                            possible
+                          </li> */}
+                        </ul>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="text-center py-12">
+                      <div className="inline-flex items-center justify-center w-20 h-20 bg-white/5 rounded-full mb-6">
+                        <QrCode className="w-10 h-10 text-white/30" />
+                      </div>
+                      <h3 className="text-xl font-bold text-white mb-2">
+                        Select Events to Generate QR Code
+                      </h3>
+                      <p className="text-white/60">
+                        Choose events from the form to see payment QR code
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 {/* Submit Button */}
@@ -934,137 +989,92 @@ export default function RegistrationForm() {
             transition={{ delay: 0.2 }}
             className="space-y-8"
           >
-            {/* QR Code Display */}
-            <div className="bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
-              <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                <QrCode className="w-6 h-6 text-purple-400" />
-                Payment QR Code
-              </h2>
+            {/* Payment Receipt Upload */}
+            <div className="pt-6 border-t border-white/10">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <Upload className="w-5 h-5 text-green-400" />
+                Upload Payment Receipt
+              </h3>
+              <p className="text-white/60 text-sm mb-4">
+                Upload screenshot of payment confirmation
+              </p>
 
-              {selectedEvents.length > 0 ? (
-                <div className="space-y-6">
-                  {/* QR Code */}
-                  <div className="flex flex-col items-center justify-center p-8 bg-white/5 rounded-2xl border border-white/10">
-                    <div className="p-4 bg-white rounded-xl mb-4">
-                      <QRCodeCanvas
-                        value={generateUPIString()}
-                        size={200}
-                        level="H"
-                        includeMargin={true}
-                        fgColor="#1e293b"
-                        bgColor="#ffffff"
-                      />
-                    </div>
-                    <div className="text-center">
-                      <div className="text-3xl font-bold text-yellow-400 mb-2">
-                        ₹{totalAmount}
+              <Dropzone
+                onDrop={handleDrop}
+                accept={{
+                  "image/*": [".jpeg", ".jpg", ".png"],
+                  "application/pdf": [".pdf"],
+                }}
+                maxSize={5 * 1024 * 1024} // 5MB
+                disabled={uploading}
+              >
+                {({ getRootProps, getInputProps, isDragActive }) => (
+                  <div
+                    {...getRootProps()}
+                    className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-300 ${
+                      isDragActive
+                        ? "border-yellow-400 bg-yellow-500/10"
+                        : "border-white/20 hover:border-yellow-400 hover:bg-white/5"
+                    } ${uploading ? "opacity-50 cursor-not-allowed" : ""}`}
+                  >
+                    <input {...getInputProps()} />
+                    {uploading ? (
+                      <div className="flex flex-col items-center">
+                        <Loader2 className="w-12 h-12 text-yellow-400 animate-spin mb-4" />
+                        <p className="text-white">Uploading...</p>
                       </div>
-                      <div className="text-white/70 text-sm">
-                        Scan to pay via UPI
+                    ) : paymentReceipt ? (
+                      <div className="relative">
+                        {receiptPreview ? (
+                          <div className="relative mx-auto w-48 h-48 rounded-lg overflow-hidden border border-white/20">
+                            <img
+                              src={receiptPreview}
+                              alt="Receipt preview"
+                              className="w-full h-full object-contain"
+                            />
+                          </div>
+                        ) : (
+                          <div className="p-4 bg-white/5 rounded-lg">
+                            <div className="text-white font-medium mb-2">
+                              {paymentReceipt.name}
+                            </div>
+                            <div className="text-white/60 text-sm">
+                              {(paymentReceipt.size / 1024).toFixed(2)} KB
+                            </div>
+                          </div>
+                        )}
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeReceipt();
+                          }}
+                          className="absolute -top-2 -right-2 p-1 bg-red-500 hover:bg-red-600 rounded-full"
+                        >
+                          <X className="w-4 h-4 text-white" />
+                        </button>
                       </div>
-                      {registrationToken && (
-                        <div className="mt-2 text-white/50 text-xs">
-                          Token: {registrationToken}
+                    ) : (
+                      <div className="space-y-4">
+                        <Upload className="w-12 h-12 text-white/50 mx-auto" />
+                        <div>
+                          <p className="text-white font-medium mb-2">
+                            {isDragActive
+                              ? "Drop the file here"
+                              : "Drag & drop payment receipt"}
+                          </p>
+                          <p className="text-white/60 text-sm">
+                            or click to select file
+                          </p>
                         </div>
-                      )}
-                    </div>
+                        <p className="text-white/50 text-xs">
+                          Supports: JPG, PNG, PDF (Max 5MB)
+                        </p>
+                      </div>
+                    )}
                   </div>
-
-                  {/* Payment Details */}
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="text-white/70">Selected Events</div>
-                      <div className="text-white font-medium">
-                        {selectedEvents.length} events
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div className="text-white/70">Price per Event</div>
-                      <div className="text-white font-medium">₹100</div>
-                    </div>
-                    <div className="h-px bg-white/10"></div>
-                    <div className="flex items-center justify-between">
-                      <div className="text-white font-bold">Total Amount</div>
-                      <div className="text-2xl font-bold text-yellow-400">
-                        ₹{totalAmount}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Token Info */}
-                  {registrationToken && (
-                    <div className="p-4 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-xl border border-green-500/20">
-                      <h4 className="text-white font-bold mb-2">
-                        Token Information
-                      </h4>
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="text-white/70">College Code:</span>
-                          <span className="text-white font-mono">MCGK</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-white/70">Year:</span>
-                          <span className="text-white font-mono">2026</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-white/70">Event Count:</span>
-                          <span className="text-yellow-400 font-mono">
-                            {selectedEvents.length.toString().padStart(2, "0")}
-                          </span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-white/70">Participant #:</span>
-                          <span className="text-green-400 font-mono">
-                            {registrationToken.slice(-3)}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Payment Instructions */}
-                  <div className="p-4 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl border border-blue-500/20">
-                    <h4 className="text-white font-bold mb-2">
-                      Payment Instructions:
-                    </h4>
-                    <ul className="text-white/70 text-sm space-y-2">
-                      <li className="flex items-start gap-2">
-                        <div className="w-1 h-1 bg-white/50 rounded-full mt-2"></div>
-                        Scan the QR code with any UPI app
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <div className="w-1 h-1 bg-white/50 rounded-full mt-2"></div>
-                        Verify the amount before payment
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <div className="w-1 h-1 bg-white/50 rounded-full mt-2"></div>
-                        Save payment screenshot as receipt
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <div className="w-1 h-1 bg-white/50 rounded-full mt-2"></div>
-                        Upload receipt after successful payment
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <div className="w-1 h-1 bg-white/50 rounded-full mt-2"></div>
-                        Mention token {registrationToken} in payment note if
-                        possible
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              ) : (
-                <div className="text-center py-12">
-                  <div className="inline-flex items-center justify-center w-20 h-20 bg-white/5 rounded-full mb-6">
-                    <QrCode className="w-10 h-10 text-white/30" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-2">
-                    Select Events to Generate QR Code
-                  </h3>
-                  <p className="text-white/60">
-                    Choose events from the form to see payment QR code
-                  </p>
-                </div>
-              )}
+                )}
+              </Dropzone>
             </div>
 
             {/* Important Notes */}
