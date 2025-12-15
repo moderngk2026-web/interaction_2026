@@ -16,6 +16,16 @@ import Image from "next/image";
 export default function AboutSectionWithImages() {
   const leadership = [
     {
+      name: "Dr. Gajanan Ekbote",
+      // role: "Principal",
+      // department: "Modern College of Commerce, Arts and Science",
+      description:
+        "Visionary leader with 25+ years in academic excellence and innovation.",
+      image: "/images/principal.jpg", // Replace with your image path
+      color: "border-blue-200 bg-gradient-to-br from-blue-50 to-white",
+      //   badge: "25+ Years Experience",
+    },
+    {
       name: "Dr. Sanjay Kharat",
       role: "Principal",
       department: "Modern College of Commerce, Arts and Science",
@@ -87,7 +97,7 @@ export default function AboutSectionWithImages() {
       id="about"
       className="py-12 bg-gradient-to-b from-white to-gray-50"
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-10">
           <h2 className="text-6xl font-bold text-gray-800 mb-3 font-roman font-italic">
@@ -108,7 +118,7 @@ export default function AboutSectionWithImages() {
             Our <span className="text-blue-600">Leadership</span>
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
             {leadership.map((person, index) => (
               <motion.div
                 key={index}

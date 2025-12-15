@@ -33,54 +33,72 @@ const events: Event[] = [
   {
     id: 1,
     code: "01",
-    name: "Annual Tech Fest",
+    name: "Code Warriors",
     price: 100,
-    description: "Coding competitions and tech workshops",
+    description: "Coding competitions",
     maxParticipants: 300,
     currentParticipants: 245,
   },
   {
     id: 2,
     code: "02",
-    name: "Cultural Night",
+    name: "Mind Marathon (Quiz)",
     price: 100,
-    description: "Music, dance and drama performances",
+    description: "Mind Marathon (Quiz)",
     maxParticipants: 500,
     currentParticipants: 320,
   },
   {
     id: 3,
     code: "03",
-    name: "Sports Meet",
+    name: "SnapReel Contest",
     price: 100,
-    description: "Various sports competitions",
+    description: "SnapReel Contest",
     maxParticipants: 200,
     currentParticipants: 180,
   },
   {
     id: 4,
     code: "04",
-    name: "AI Workshop",
+    name: "Gamer Strike",
     price: 100,
-    description: "Hands-on AI and ML workshop",
+    description: "Gamer Strike",
     maxParticipants: 50,
     currentParticipants: 45,
   },
   {
     id: 5,
     code: "05",
-    name: "Startup Pitch",
+    name: "Tech Debate",
     price: 100,
-    description: "Startup pitching competition",
+    description: "Tech Debate",
     maxParticipants: 100,
     currentParticipants: 85,
   },
   {
     id: 6,
     code: "06",
-    name: "Photography Exhibition",
+    name: "Grab the oppurtunity",
     price: 100,
-    description: "Student photography showcase",
+    description: "Grab the oppurtunity",
+    maxParticipants: 150,
+    currentParticipants: 120,
+  },
+  {
+    id: 7,
+    code: "07",
+    name: "Web Craft Challenge",
+    price: 100,
+    description: "Web Craft Challenge",
+    maxParticipants: 150,
+    currentParticipants: 120,
+  },
+  {
+    id: 8,
+    code: "08",
+    name: "Spark the idea",
+    price: 100,
+    description: "Spark the idea",
     maxParticipants: 150,
     currentParticipants: 120,
   },
@@ -629,7 +647,7 @@ export default function RegistrationForm() {
                               <div className="text-white/60 text-sm mt-1">
                                 {event.description}
                               </div>
-                              <div className="flex items-center gap-2 mt-2">
+                              {/* <div className="flex items-center gap-2 mt-2">
                                 <div className="flex-1 h-1 bg-white/10 rounded-full overflow-hidden">
                                   <div
                                     className="h-full bg-gradient-to-r from-green-500 to-blue-500 rounded-full"
@@ -652,7 +670,7 @@ export default function RegistrationForm() {
                                   <AlertCircle className="w-3 h-3" />
                                   Event Full
                                 </div>
-                              )}
+                              )} */}
                             </div>
                           </div>
                         </div>
@@ -748,11 +766,11 @@ export default function RegistrationForm() {
                           <div className="text-white/70 text-sm">
                             Scan to pay via UPI
                           </div>
-                          {registrationToken && (
+                          {/* {registrationToken && (
                             <div className="mt-2 text-white/50 text-xs">
                               Token: {registrationToken}
                             </div>
-                          )}
+                          )} */}
                         </div>
                       </div>
 
@@ -806,14 +824,14 @@ export default function RegistrationForm() {
                                   .padStart(2, "0")}
                               </span>
                             </div>
-                            <div className="flex items-center justify-between">
+                            {/* <div className="flex items-center justify-between">
                               <span className="text-white/70">
                                 Participant #:
                               </span>
                               <span className="text-green-400 font-mono">
                                 {registrationToken.slice(-3)}
                               </span>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       )}
@@ -1132,7 +1150,7 @@ export default function RegistrationForm() {
               href="mailto:events@college.edu"
               className="text-yellow-400 hover:underline"
             >
-              events@college.edu
+              moderngk2026@gmail.com
             </a>{" "}
             | Phone:{" "}
             <a

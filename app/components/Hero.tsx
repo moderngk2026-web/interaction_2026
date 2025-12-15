@@ -139,7 +139,7 @@ export default function Hero() {
           >
             <Sparkles className="w-5 h-5 text-yellow-400" />
             <span className="text-sm font-semibold text-white/90">
-              INTERACTION 2026 IS HERE
+              25 Years of Excellence (Silver Jubilee)
             </span>
           </motion.div>
 

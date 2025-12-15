@@ -18,8 +18,16 @@ export default function ScheduleTable() {
         type: "ceremony",
       },
       {
+        time: "9:00 AM - 10:00 AM",
+        event: "Mind Marathon",
+        venue: "Main Auditorium",
+        description: "Chief Guest: Dr. Rajesh Sharma",
+        icon: "🎤",
+        type: "ceremony",
+      },
+      {
         time: "10:30 AM - 12:30 PM",
-        event: "Game 1",
+        event: "WebCraftChalleng",
         venue: "Computer Lab A",
         description: "Game 1",
         icon: "🎮",
@@ -28,7 +36,7 @@ export default function ScheduleTable() {
       },
       {
         time: "2:00 PM - 4:00 PM",
-        event: "Game 2",
+        event: "SparkTheIdea",
         venue: "Gaming Arena",
         description: "Game 2",
         icon: "⚽",
@@ -37,7 +45,7 @@ export default function ScheduleTable() {
       },
       {
         time: "4:30 PM - 6:30 PM",
-        event: "Game 3",
+        event: "Grab The Opportunity",
         venue: "Conference Hall",
         description: "Game 3",
         icon: "♟️",
@@ -48,7 +56,7 @@ export default function ScheduleTable() {
     day2: [
       {
         time: "9:30 AM - 11:30 AM",
-        event: "Game 4",
+        event: "Tech Debat",
         venue: "Game Arena",
         description: "Game 4",
         icon: "📱",
@@ -57,7 +65,7 @@ export default function ScheduleTable() {
       },
       {
         time: "12:00 PM - 2:00 PM",
-        event: "Game 5",
+        event: "Code Warrio",
         venue: "Sports Complex",
         description: "Game 5",
         icon: "🏓",
@@ -66,12 +74,20 @@ export default function ScheduleTable() {
       },
       {
         time: "2:30 PM - 4:30 PM",
-        event: "Game 7",
+        event: "GamerStrike",
         venue: "Computer Lab B",
         description: "Game 7",
         icon: "🎯",
         type: "Game",
         prize: "₹12,000",
+      },
+      {
+        time: "6:00 PM - 7:00 PM",
+        event: "SnapReelChallenge",
+        venue: "Main Auditorium",
+        description: "All Winners & Special Awards",
+        icon: "🏆",
+        type: "ceremony",
       },
       {
         time: "6:00 PM - 7:00 PM",
@@ -258,7 +274,7 @@ export default function ScheduleTable() {
                   {/* Event Details */}
                   <div className="col-span-4">
                     <div className="flex items-center gap-3">
-                      <div className="text-2xl">{item.icon}</div>
+                      {/* <div className="text-2xl">{item.icon}</div> */}
                       <div>
                         <h4 className="font-bold text-gray-800">
                           {item.event}

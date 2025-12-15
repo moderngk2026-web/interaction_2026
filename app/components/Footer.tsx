@@ -19,7 +19,7 @@ export default function Footer() {
     { name: "Home", href: "/" },
     { name: "Events", href: "/events" },
     { name: "Schedule", href: "/schedule" },
-    { name: "Speakers", href: "/speakers" },
+    // { name: "Speakers", href: "/speakers" },
     { name: "Sponsors", href: "/sponsors" },
     { name: "Contact", href: "/contact" },
   ];
@@ -109,7 +109,7 @@ export default function Footer() {
                 <div>
                   <div className="font-medium">Venue</div>
                   <div className="text-gray-400 text-sm">
-                    University Main Campus
+                    Modern College, Ganeshkhind, Pune - 411007
                   </div>
                 </div>
               </li>
@@ -124,7 +124,7 @@ export default function Footer() {
           </div>
 
           {/* Newsletter */}
-          <div>
+          {/* <div>
             <h4 className="text-lg font-semibold mb-4 text-white">
               Stay Updated
             </h4>
@@ -150,7 +150,7 @@ export default function Footer() {
                 We respect your privacy. Unsubscribe at any time.
               </p>
             </form>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -166,7 +166,7 @@ export default function Footer() {
           </div>
 
           {/* Policy Links */}
-          <div className="flex flex-wrap gap-6">
+          {/* <div className="flex flex-wrap gap-6">
             <Link
               href="/privacy"
               className="text-gray-400 hover:text-white text-sm transition-colors"
@@ -191,7 +191,7 @@ export default function Footer() {
             >
               Code of Conduct
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>

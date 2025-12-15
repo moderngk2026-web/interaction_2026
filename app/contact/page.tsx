@@ -4,48 +4,52 @@ import { Mail, Phone, MapPin, User, GraduationCap } from "lucide-react";
 import Image from "next/image";
 
 const contactData = {
-  email: "events@college.edu",
+  email: "moderngk2026@gmail.com",
   phone: "+91 12345 67890",
-  location: "University Main Campus",
+  location: "Modern College, Ganeshkhind, Pune - 411007",
 
   studentCoordinators: [
     {
-      name: "Rahul Sharma",
-      phone: "+91 98765 43210",
-      email: "rahul.sharma@college.edu",
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
+      name: "Herambh Kadam",
+      phone: "+91 9309034640",
+      // email: "rahul.sharma@college.edu",
+      image: "",
       department: "Computer Science",
       year: "Final Year",
     },
     {
-      name: "Priya Patel",
-      phone: "+91 98765 43211",
-      email: "priya.patel@college.edu",
-      image:
-        "https://images.unsplash.com/photo-1494790108755-2616b612b786?w-400&h=400&fit=crop&crop=face",
-      department: "Electronics",
+      name: "Sarthak Meher",
+      phone: "+91 7038622958",
+      // email: "priya.patel@college.edu",
+      image: "",
+      department: "Computer Science",
       year: "Final Year",
     },
   ],
 
   teacherCoordinators: [
     {
-      name: "Dr. Rajesh Kumar",
-      phone: "+91 98765 43212",
-      email: "rajesh.kumar@college.edu",
-      image:
-        "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face",
+      name: "Prof. Chaitali Makashir",
+      // phone: "+91 98765 43212",
+      // email: "rajesh.kumar@college.edu",
+      image: "",
       department: "Computer Science",
-      designation: "Professor & HOD",
+      designation: "Event Coordinator",
     },
     {
-      name: "Prof. Anjali Singh",
-      phone: "+91 98765 43213",
-      email: "anjali.singh@college.edu",
-      image:
-        "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop&crop=face",
-      department: "Student Affairs",
+      name: "Prof. Nikita Gaikwad",
+      // phone: "+91 98765 43213",
+      // email: "anjali.singh@college.edu",
+      image: "",
+      department: "Computer Science",
+      designation: "Event Coordinator",
+    },
+    {
+      name: "Prof. Pratik Pol",
+      // phone: "+91 98765 43213",
+      // email: "anjali.singh@college.edu",
+      image: "",
+      department: "Computer Science",
       designation: "Event Coordinator",
     },
   ],
@@ -175,7 +179,7 @@ export default function ContactWithImages() {
                       </div>
                     </div>
 
-                    <div className="space-y-3 pt-4 border-t border-white/10">
+                    {/* <div className="space-y-3 pt-4 border-t border-white/10">
                       <a
                         href={`mailto:${coordinator.email}`}
                         className="flex items-center gap-3 text-sm text-white/80 hover:text-blue-400 transition-colors group"
@@ -194,7 +198,7 @@ export default function ContactWithImages() {
                         </div>
                         <span>{coordinator.phone}</span>
                       </a>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               ))}
@@ -248,7 +252,7 @@ export default function ContactWithImages() {
                       </div>
                     </div>
 
-                    <div className="space-y-3 pt-4 border-t border-white/10">
+                    {/* <div className="space-y-3 pt-4 border-t border-white/10">
                       <a
                         href={`mailto:${coordinator.email}`}
                         className="flex items-center gap-3 text-sm text-white/80 hover:text-yellow-400 transition-colors group"
@@ -267,7 +271,7 @@ export default function ContactWithImages() {
                         </div>
                         <span>{coordinator.phone}</span>
                       </a>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               ))}

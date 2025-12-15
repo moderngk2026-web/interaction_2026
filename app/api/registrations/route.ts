@@ -49,12 +49,14 @@ async function generateRegistrationToken(eventCount: number): Promise<string> {
 // EVENTS DATA (Should match frontend)
 //-------------------------------------
 const eventsData = [
-  { id: 1, code: "01", name: "Annual Tech Fest", price: 100 },
-  { id: 2, code: "02", name: "Cultural Night", price: 100 },
-  { id: 3, code: "03", name: "Sports Meet", price: 100 },
-  { id: 4, code: "04", name: "AI Workshop", price: 100 },
-  { id: 5, code: "05", name: "Startup Pitch", price: 100 },
-  { id: 6, code: "06", name: "Photography Exhibition", price: 100 },
+  { id: 1, code: "01", name: "Code Warriors", price: 100 },
+  { id: 2, code: "02", name: "Mind Marathon (Quiz)", price: 100 },
+  { id: 3, code: "03", name: "SnapReel Contest", price: 100 },
+  { id: 4, code: "04", name: "Gamer Strike", price: 100 },
+  { id: 5, code: "05", name: "Tech Debate", price: 100 },
+  { id: 6, code: "06", name: "Grab the oppurtunity", price: 100 },
+  { id: 7, code: "07", name: "Web Craft Challenge", price: 100 },
+  { id: 8, code: "08", name: "Spark the idea", price: 100 },
 ];
 
 export async function GET(request: NextRequest) {
