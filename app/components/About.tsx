@@ -36,7 +36,7 @@ export default function AboutSectionWithImages() {
       //   badge: "25+ Years Experience",
     },
     {
-      name: "Dr. Pallavi ",
+      name: "Dr. Pallawi Bulakh",
       role: "HOD - Computer Science",
       department: "Department of Computer Science Modern College",
       description:

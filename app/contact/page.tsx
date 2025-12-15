@@ -140,7 +140,7 @@ export default function ContactWithImages() {
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-white">
-                  Student Coordinators
+                  Student Support
                 </h2>
                 <p className="text-white/60 text-sm">
                   Final year students managing event operations
