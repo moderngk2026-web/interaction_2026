@@ -13,53 +13,54 @@ interface Event {
 const sampleEvents: Event[] = [
   {
     id: 1,
-    title: "Annual Tech Fest 2024",
-    description:
-      "Coding competitions, tech talks, and workshops by industry experts",
-    date: "Nov 15, 2024",
-  },
-  {
-    id: 2,
-    title: "Cultural Night: Harmony",
+    title: "Mind Marathon (Quiz)",
     description:
       "Music, dance, and drama performances showcasing cultural heritage",
-    date: "Nov 20, 2024",
+    date: "Jan 09, 2026",
+  },
+
+  {
+    id: 2,
+    title: "Grab the oppurtunity",
+    description: "Showcase of student photography work",
+    date: "Jan 09, 2026",
   },
   {
     id: 3,
-    title: "Sports Meet 2024",
-    description: "Athletics, cricket, football, and basketball tournaments",
-    date: "Nov 25, 2024",
+    title: "Web Craft Challenge",
+    description: "48-hour hackathon for social and environmental solutions",
+    date: "Jan 09, 2026",
   },
   {
     id: 4,
-    title: "AI Workshop",
-    description: "Hands-on workshop on AI and Machine Learning fundamentals",
-    date: "Nov 18, 2024",
+    title: "Spark the idea",
+    description: "Interactive session with industry leaders",
+    date: "Jan 09, 2026",
   },
   {
     id: 5,
-    title: "Startup Pitch",
-    description: "Pitch innovative ideas to investors and win seed funding",
-    date: "Nov 22, 2024",
+    title: "Code Warriors",
+    description:
+      "Coding competitions, tech talks, and workshops by industry experts",
+    date: "Jan 10, 2026",
   },
   {
     id: 6,
-    title: "Photography Exhibition",
-    description: "Showcase of student photography work",
-    date: "Nov 28, 2024",
+    title: "SnapReel Contest",
+    description: "Athletics, cricket, football, and basketball tournaments",
+    date: "Jan 10, 2026",
   },
   {
     id: 7,
-    title: "Code for Good Hackathon",
-    description: "48-hour hackathon for social and environmental solutions",
-    date: "Dec 1, 2024",
+    title: "Gamer Strike",
+    description: "Hands-on workshop on AI and Machine Learning fundamentals",
+    date: "Jan 10, 2026",
   },
   {
     id: 8,
-    title: "Future of Tech Lecture",
-    description: "Interactive session with industry leaders",
-    date: "Nov 30, 2024",
+    title: "Tech Debate",
+    description: "Pitch innovative ideas to investors and win seed funding",
+    date: "Jan 10, 2026",
   },
 ];
 
@@ -142,9 +143,9 @@ export default function AlternatingEvents() {
                         <h3 className="text-2xl font-bold text-white mb-3">
                           {event.title}
                         </h3>
-                        <p className="text-white/70 text-lg">
+                        {/* <p className="text-white/70 text-lg">
                           {event.description}
-                        </p>
+                        </p> */}
                       </div>
                     </div>
                   </div>

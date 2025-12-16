@@ -5,8 +5,8 @@ import Image from "next/image";
 
 const contactData = {
   email: "moderngk2026@gmail.com",
-  phone: "+91 12345 67890",
-  location: "Modern College, Ganeshkhind, Pune - 411007",
+  phone: "+91 9309034640",
+  location: "Modern College, Ganeshkhind, Pune - 411016",
 
   studentCoordinators: [
     {
@@ -32,7 +32,7 @@ const contactData = {
       name: "Prof. Chaitali Makashir",
       // phone: "+91 98765 43212",
       // email: "rajesh.kumar@college.edu",
-      image: "",
+      image: "/images/12.png",
       department: "Computer Science",
       designation: "Event Coordinator",
     },
@@ -40,7 +40,7 @@ const contactData = {
       name: "Prof. Nikita Gaikwad",
       // phone: "+91 98765 43213",
       // email: "anjali.singh@college.edu",
-      image: "",
+      image: "/images/1.png",
       department: "Computer Science",
       designation: "Event Coordinator",
     },
@@ -48,7 +48,7 @@ const contactData = {
       name: "Prof. Pratik Pol",
       // phone: "+91 98765 43213",
       // email: "anjali.singh@college.edu",
-      image: "",
+      image: "/images/17.png",
       department: "Computer Science",
       designation: "Event Coordinator",
     },
@@ -58,7 +58,7 @@ const contactData = {
 export default function ContactWithImages() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-blue-900 p-4 md:p-8">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-8xl mx-auto">
         <h1 className="text-5xl md:text-5xl font-bold text-white text-center mb-6 mt-20 font-roman font-italic">
           Contact{" "}
           <span className="bg-gradient-to-r from-yellow-400 to-pink-500 bg-clip-text text-transparent">
@@ -87,9 +87,9 @@ export default function ContactWithImages() {
                 </a>
               </div>
             </div>
-            <p className="text-white/70 text-sm">
+            {/* <p className="text-white/70 text-sm">
               For general inquiries and registration
-            </p>
+            </p> */}
           </div>
 
           <div className="bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300">
@@ -107,9 +107,9 @@ export default function ContactWithImages() {
                 </a>
               </div>
             </div>
-            <p className="text-white/70 text-sm">
+            {/* <p className="text-white/70 text-sm">
               Available Monday to Friday, 9AM - 5PM
-            </p>
+            </p> */}
           </div>
 
           <div className="bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300">
@@ -124,9 +124,9 @@ export default function ContactWithImages() {
                 </div>
               </div>
             </div>
-            <p className="text-white/70 text-sm">
+            {/* <p className="text-white/70 text-sm">
               Main campus, near administration building
-            </p>
+            </p> */}
           </div>
         </div>
 
@@ -156,7 +156,7 @@ export default function ContactWithImages() {
                 >
                   <div className="p-6">
                     <div className="flex items-start gap-4 mb-4">
-                      <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-blue-500/30">
+                      <div className="relative w-16 h-16  overflow-hidden border-2 border-blue-500/30">
                         <img
                           src={coordinator.image}
                           alt={coordinator.name}
@@ -229,7 +229,7 @@ export default function ContactWithImages() {
                 >
                   <div className="p-6">
                     <div className="flex items-start gap-4 mb-4">
-                      <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-yellow-500/30">
+                      <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-yellow-500/30">
                         <img
                           src={coordinator.image}
                           alt={coordinator.name}

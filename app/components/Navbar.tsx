@@ -3,7 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { Menu, X, ChevronUp, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import Image from "next/image";
 
 interface NavItem {
   name: string;
@@ -13,55 +14,63 @@ interface NavItem {
 const navItems: NavItem[] = [
   { name: "Home", href: "/" },
   { name: "Events", href: "/events" },
-  { name: "Our Team", href: "/our-team" },
-  { name: "Schedule", href: "/schedule" },
+  // { name: "Our Team", href: "/our-team" },
+  // { name: "Schedule", href: "/schedule" },
   { name: "Contact", href: "/contact" },
 ];
 
 // Top Header Component
 function TopHeader() {
   return (
-    <div className="w-full bg-gradient-to-r from-blue-950 via-purple-950 to-indigo-950 text-white py-2 px-4 border-b border-white/10">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
-        {/* Left: College Logo - Replace with actual logo */}
-        <div className="flex-shrink-0 mb-2 md:mb-0">
-          <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
-            <span className="text-white font-bold text-xs text-center">
-              COLLEGE LOGO
-            </span>
+    <div className="w-full bg-gradient-to-r from-blue-950 via-purple-950 to-indigo-950 text-white py-3 px-4 border-b border-white/10">
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
+        {/* Left: College Logo */}
+        <div className="flex-shrink-0">
+          <div className="w-16 h-16 rounded-lg flex items-center justify-center shadow-lg">
+            <Image
+              src="/images/collegelogo.jpg"
+              alt="PES Logo"
+              width={48}
+              height={48}
+              className="object-contain w-24 h-24"
+            />
           </div>
         </div>
 
-        {/* Middle: College Information */}
-        <div className="flex-1 text-center md:text-center mx-4 md:mx-8">
-          <div className="flex flex-col items-center">
-            <h1 className="text-lg md:text-xl font-bold text-white tracking-tight">
+        {/* Middle: College Information - Mobile responsive text */}
+        <div className="flex-1 mx-4">
+          <div className="flex flex-col items-center text-center">
+            <h1 className="text-sm font-bold text-white tracking-tight leading-tight">
               PROGRESSIVE EDUCATION SOCIETY&apos;S
             </h1>
-            <h2 className="text-base md:text-lg font-semibold text-yellow-300 mt-1">
+            <h2 className="text-lg font-semibold text-yellow-300 mt-0.5 leading-tight">
               MODERN COLLEGE OF ARTS, SCIENCE & COMMERCE (AUTONOMOUS)
             </h2>
-            <p className="text-sm md:text-base text-gray-200 mt-1">
+            <p className="text-xs text-gray-200 mt-0.5 leading-tight">
               Ganeshkhind, Pune - 411016
             </p>
-            <div className="flex flex-wrap justify-center gap-x-4 mt-1">
-              <p className="text-xs md:text-sm text-gray-300">
+            <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-x-2 gap-y-0.5 mt-0.5">
+              <p className="text-[10px] text-gray-300 leading-tight">
                 Affiliated to Savitribai Phule Pune University, Pune
               </p>
-              <span className="text-gray-400 hidden md:inline">|</span>
-              <p className="text-xs md:text-sm text-green-300 font-medium">
+              {/* <span className="hidden sm:inline text-gray-400">|</span>
+              <p className="text-[10px] text-green-300 font-medium leading-tight">
                 Re-accredited by NAAC with &apos;A+&apos; Grade
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
 
-        {/* Right: Another Logo - Replace with actual logo */}
-        <div className="flex-shrink-0 mt-2 md:mt-0">
-          <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-red-500 rounded-lg flex items-center justify-center shadow-lg">
-            <span className="text-white font-bold text-xs text-center">
-              LOGO
-            </span>
+        {/* Right: Another Logo */}
+        <div className="flex-shrink-0">
+          <div className="w-16 h-16 rounded-lg flex items-center justify-center shadow-lg">
+            <Image
+              src="/images/interactionlogo.jpg"
+              alt="PES Logo"
+              width={48}
+              height={48}
+              className="object-contain w-24 h-24"
+            />
           </div>
         </div>
       </div>
@@ -143,7 +152,7 @@ export default function Navbar() {
           }`}
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-20">
+            <div className="flex items-center justify-between h-16">
               {/* Logo */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
@@ -156,13 +165,13 @@ export default function Navbar() {
                     href="/"
                     className="relative flex flex-col items-center justify-center"
                   >
-                    <span className="text-3xl font-normal bg-gradient-to-r from-yellow-400 to-red-400 bg-clip-text text-transparent font-['Impact'] tracking-wider">
+                    <span className="text-2xl font-normal bg-gradient-to-r from-yellow-400 to-red-400 bg-clip-text text-transparent font-['Impact'] tracking-wider">
                       Interaction
                     </span>
                     <span
                       className={`text-xs font-semibold ${
                         isScrolled ? "text-black" : "text-white"
-                      } tracking-widest mt-1`}
+                      } tracking-widest mt-0.5`}
                     >
                       2026
                     </span>
@@ -181,13 +190,13 @@ export default function Navbar() {
                   >
                     <Link
                       href={item.href}
-                      className={`relative px-6 py-3 font-medium transition-all duration-300 group ${
+                      className={`relative px-4 py-2 font-medium transition-all duration-300 group ${
                         isScrolled
                           ? "text-gray-800 hover:text-purple-600"
                           : "text-white hover:text-yellow-300"
                       }`}
                     >
-                      <span className="relative z-10">{item.name}</span>
+                      <span className="relative z-10 text-sm">{item.name}</span>
                       <span className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-500/10 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></span>
                       <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-yellow-400 to-pink-500 group-hover:w-4/5 group-hover:left-1/10 transition-all duration-300"></span>
                     </Link>
@@ -202,7 +211,7 @@ export default function Navbar() {
                 >
                   <Link
                     href="/register"
-                    className="ml-4 px-8 py-3 bg-gradient-to-r from-yellow-500 to-pink-500 text-white font-bold rounded-full hover:shadow-xl hover:scale-105 transition-all duration-300 transform hover:shadow-yellow-500/30"
+                    className="ml-4 px-6 py-2.5 bg-gradient-to-r from-yellow-500 to-pink-500 text-white font-bold rounded-full hover:shadow-xl hover:scale-105 transition-all duration-300 transform hover:shadow-yellow-500/30 text-sm"
                   >
                     REGISTER
                   </Link>
@@ -213,14 +222,14 @@ export default function Navbar() {
               <motion.button
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className={`md:hidden p-3 rounded-lg ${
+                className={`md:hidden p-2 rounded-lg ${
                   isScrolled
                     ? "bg-gray-100 text-gray-800 hover:bg-gray-200"
                     : "bg-white/10 text-white hover:bg-white/20"
                 } transition-colors duration-200`}
                 aria-label="Toggle menu"
               >
-                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
               </motion.button>
             </div>
           </div>
@@ -235,7 +244,7 @@ export default function Navbar() {
                 transition={{ duration: 0.3 }}
                 className="md:hidden bg-gradient-to-b from-blue-900 to-purple-900 shadow-2xl"
               >
-                <div className="px-4 pt-2 pb-6 space-y-1">
+                <div className="px-4 pt-2 pb-4 space-y-1">
                   {navItems.map((item, index) => (
                     <motion.div
                       key={item.name}
@@ -245,11 +254,11 @@ export default function Navbar() {
                     >
                       <Link
                         href={item.href}
-                        className="block px-6 py-4 text-lg font-medium text-white hover:text-yellow-300 hover:bg-white/10 rounded-xl transition-all duration-200 group"
+                        className="block px-4 py-3 text-sm font-medium text-white hover:text-yellow-300 hover:bg-white/10 rounded-xl transition-all duration-200 group"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         <span className="flex items-center">
-                          <span className="w-2 h-2 bg-yellow-400 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                          <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                           {item.name}
                         </span>
                       </Link>
@@ -261,11 +270,11 @@ export default function Navbar() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6 }}
-                    className="pt-4"
+                    className="pt-3"
                   >
                     <Link
                       href="/register"
-                      className="block mx-4 px-6 py-4 bg-gradient-to-r from-yellow-500 to-pink-500 text-white font-bold text-center rounded-xl hover:shadow-xl transition-all duration-300"
+                      className="block mx-2 px-4 py-3 bg-gradient-to-r from-yellow-500 to-pink-500 text-white font-bold text-center rounded-xl hover:shadow-xl transition-all duration-300 text-sm"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       REGISTER NOW
@@ -275,24 +284,11 @@ export default function Navbar() {
               </motion.div>
             )}
           </AnimatePresence>
-
-          {/* Decorative Event Badge */}
-          {/* {!isScrolled && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="absolute top-0 left-1/2 transform -translate-x-1/2 hidden lg:block"
-            >
-              <div className="bg-gradient-to-r from-yellow-500 to-pink-500 text-white text-xs font-bold px-4 py-1 rounded-b-lg shadow-lg">
-                EVENT DATE • Jan 09-10
-              </div>
-            </motion.div>
-          )} */}
         </nav>
       </div>
 
       {/* Spacer div to prevent content jump */}
-      <div className="h-40" />
+      <div className="h-36" />
     </>
   );
 }

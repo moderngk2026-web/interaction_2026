@@ -580,7 +580,7 @@ export default function RegistrationForm() {
                 {/* College ID (Optional) */}
                 <div>
                   <label className="block text-white/70 text-sm mb-2">
-                    College ID (Optional)
+                    College Name
                   </label>
                   <input
                     type="text"
@@ -588,7 +588,7 @@ export default function RegistrationForm() {
                     value={formData.collegeId}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-transparent"
-                    placeholder="Enter your college ID"
+                    placeholder="Enter your college Name"
                   />
                 </div>
 
@@ -925,7 +925,7 @@ export default function RegistrationForm() {
                   Your registration has been submitted for verification
                 </p>
 
-                <div className="bg-white/5 p-6 rounded-xl mb-6">
+                {/* <div className="bg-white/5 p-6 rounded-xl mb-6">
                   <div className="space-y-4">
                     <div className="text-center">
                       <div className="text-white/60 text-sm mb-2">
@@ -990,7 +990,7 @@ export default function RegistrationForm() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 <p className="text-white/60 text-sm">
                   We will verify your payment and send confirmation email within
@@ -1157,7 +1157,7 @@ export default function RegistrationForm() {
               href="tel:+911234567890"
               className="text-yellow-400 hover:underline"
             >
-              +91 12345 67890
+              +91 9309034640
             </a>
           </p>
         </motion.div>

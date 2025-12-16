@@ -18,9 +18,9 @@ export default function Footer() {
   const quickLinks = [
     { name: "Home", href: "/" },
     { name: "Events", href: "/events" },
-    { name: "Schedule", href: "/schedule" },
+    // { name: "Schedule", href: "/schedule" },
     // { name: "Speakers", href: "/speakers" },
-    { name: "Sponsors", href: "/sponsors" },
+    // { name: "Sponsors", href: "/sponsors" },
     { name: "Contact", href: "/contact" },
   ];
 
@@ -110,7 +110,7 @@ export default function Footer() {
                 <div>
                   <div className="font-medium">Venue</div>
                   <div className="text-gray-400 text-sm">
-                    Modern College, Ganeshkhind, Pune - 411007
+                    Modern College, Ganeshkhind, Pune - 411016
                   </div>
                 </div>
               </li>
@@ -165,7 +165,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           {/* Copyright */}
           <div className="text-gray-500 text-sm">
-            © 2026 Interaction Tech Symposium. All rights reserved.
+            © 2026 Interaction. All rights reserved.
           </div>
 
           {/* Policy Links */}
