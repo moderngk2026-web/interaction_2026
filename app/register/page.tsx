@@ -216,7 +216,7 @@ export default function RegistrationForm() {
       if (prev.includes(eventId)) {
         return prev.filter((id) => id !== eventId);
       } else {
-        if (prev.length < 6) {
+        if (prev.length < 8) {
           return [...prev, eventId];
         }
         return prev;
