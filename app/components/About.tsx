@@ -16,22 +16,22 @@ import Image from "next/image";
 export default function AboutSectionWithImages() {
   const leadership = [
     {
-      name: "Dr. Gajanan Ekbote",
-      // role: "Principal",
-      // department: "Modern College of Commerce, Arts and Science",
-      description:
-        "Visionary leader with 25+ years in academic excellence and innovation.",
-      image: "/images/principal.jpg", // Replace with your image path
-      color: "border-blue-200 bg-gradient-to-br from-blue-50 to-white",
-      //   badge: "25+ Years Experience",
-    },
-    {
       name: "Dr. Sanjay Kharat",
       role: "Principal",
       department: "Modern College of Commerce, Arts and Science",
       description:
         "Visionary leader with 25+ years in academic excellence and innovation.",
-      image: "/images/principal.jpg", // Replace with your image path
+      image: "/images/14.png", // Replace with your image path
+      color: "border-blue-200 bg-gradient-to-br from-blue-50 to-white",
+      //   badge: "25+ Years Experience",
+    },
+    {
+      name: "Dr. Swati Kandharkar",
+      role: "Vice Principal",
+      department: "Modern College of Commerce, Arts and Science",
+      description:
+        "Visionary leader with 25+ years in academic excellence and innovation.",
+      image: "/images/15.png", // Replace with your image path
       color: "border-blue-200 bg-gradient-to-br from-blue-50 to-white",
       //   badge: "25+ Years Experience",
     },
@@ -41,7 +41,7 @@ export default function AboutSectionWithImages() {
       department: "Department of Computer Science Modern College",
       description:
         "Pioneering industry-academia collaborations in emerging technologies.",
-      image: "/images/hod.jpg", // Replace with your image path
+      image: "/images/13.png", // Replace with your image path
       color: "border-purple-200 bg-gradient-to-br from-purple-50 to-white",
       //   badge: "Industry Expert",
     },
@@ -132,15 +132,16 @@ export default function AboutSectionWithImages() {
                   <div className="relative flex-shrink-0">
                     <div className="w-24 h-24 rounded-xl overflow-hidden border-3 border-white shadow-md">
                       {/* Image Container */}
-                      <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center relative">
+                      <div className="w-full h-full flex items-center justify-center relative">
                         {/* Placeholder if image not available */}
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="text-gray-500 text-2xl font-bold">
-                            {person.name
-                              .split(" ")
-                              .map((n) => n[0])
-                              .join("")}
-                          </div>
+                          <Image
+                            src={person.image}
+                            alt={person.name}
+                            width={100}
+                            height={100}
+                            className="w-full h-full object-cover"
+                          />
                         </div>
 
                         {/* Actual Image - Uncomment when you have images */}
@@ -244,9 +245,7 @@ export default function AboutSectionWithImages() {
                 <p className="text-gray-700 text-sm">
                   <strong className="text-gray-800">Interaction 2026</strong> is
                   our annual flagship event designed to bridge the gap between
-                  academic learning and real-world industry applications. This
-                  2-day symposium brings together students, innovators, and
-                  industry leaders to explore cutting-edge technologies.
+                  academic learning and real-world industry applications.
                 </p>
 
                 {/* Timeline Visual */}

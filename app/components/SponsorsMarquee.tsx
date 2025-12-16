@@ -85,10 +85,7 @@ export default function SponsorsMarqueeWithImages() {
                 <div
                   className={`w-24 h-24 rounded-xl ${sponsor.bgColor} border-2 border-gray-200 flex items-center justify-center shadow-md hover:shadow-lg hover:border-blue-300 transition-all duration-300 p-4`}
                 >
-                  {/* Placeholder - Replace with actual images */}
                   <div className="relative w-full h-full flex items-center justify-center">
-                    {/* For actual images, uncomment this: */}
-
                     <Image
                       src={sponsor.logo}
                       alt={`${sponsor.name} logo`}
@@ -98,7 +95,6 @@ export default function SponsorsMarqueeWithImages() {
                       priority={index < 4}
                     />
 
-                    {/* Placeholder text - Remove when using real images */}
                     <div className="text-center">
                       <div className="text-3xl font-bold text-gray-700">
                         {sponsor.name.charAt(0)}
@@ -108,13 +104,12 @@ export default function SponsorsMarqueeWithImages() {
                   </div>
                 </div>
 
-                {/* Sponsor Name */}
-                <div className="text-center">
+                {/* <div className="text-center">
                   <div className="font-semibold text-gray-800 text-sm">
                     {sponsor.name}
                   </div>
                   <div className="text-gray-500 text-xs">Partner</div>
-                </div>
+                </div> */}
               </div>
             ))}
           </motion.div>

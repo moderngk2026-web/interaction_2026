@@ -50,8 +50,9 @@ export default function Footer() {
             </div>
 
             <p className="text-gray-400 text-sm">
-              Annual tech symposium bringing together innovators, creators, and
-              industry leaders to shape the future of technology.
+              Annual intercollegiate event which is organised by the department
+              of computer science modern college Ganesh khind to bring
+              students together
             </p>
 
             {/* Social Links */}
@@ -117,7 +118,9 @@ export default function Footer() {
                 <Phone className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <div className="font-medium">Contact</div>
-                  <div className="text-gray-400 text-sm">+91 98765 43210</div>
+                  <div className="text-gray-400 text-sm">
+                    +91 9309034640 / +91 7038622958
+                  </div>
                 </div>
               </li>
             </ul>

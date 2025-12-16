@@ -41,7 +41,6 @@ interface Registration {
   registrationToken: string;
   paymentVerified: boolean;
   paymentReceipt: string;
-  qrCodeData: string; // Add this field for QR code
   createdAt: string;
   updatedAt: string;
 }

@@ -154,13 +154,13 @@ export default function Hero() {
           </motion.h1>
 
           {/* Subtitle */}
-          <motion.p
+          {/* <motion.p
             variants={itemVariants}
             className="text-2xl md:text-4xl font-bold text-white mb-8"
           >
             Where <span className="text-yellow-400">Ideas</span> Collide &{" "}
             <span className="text-pink-400">Innovation</span> Thrives
-          </motion.p>
+          </motion.p> */}
 
           {/* Description */}
           <motion.p

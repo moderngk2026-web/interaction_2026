@@ -27,7 +27,7 @@ export default function ScheduleTable() {
       },
       {
         time: "10:30 AM - 12:30 PM",
-        event: "WebCraftChalleng",
+        event: "Web Craft Challenge",
         venue: "Computer Lab A",
         description: "Game 1",
         icon: "🎮",
@@ -36,7 +36,7 @@ export default function ScheduleTable() {
       },
       {
         time: "2:00 PM - 4:00 PM",
-        event: "SparkTheIdea",
+        event: "Spark The Idea",
         venue: "Gaming Arena",
         description: "Game 2",
         icon: "⚽",
@@ -74,7 +74,7 @@ export default function ScheduleTable() {
       },
       {
         time: "2:30 PM - 4:30 PM",
-        event: "GamerStrike",
+        event: "Gamer Strike",
         venue: "Computer Lab B",
         description: "Game 7",
         icon: "🎯",
@@ -83,7 +83,7 @@ export default function ScheduleTable() {
       },
       {
         time: "6:00 PM - 7:00 PM",
-        event: "SnapReelChallenge",
+        event: "Snap Reel Challenge",
         venue: "Main Auditorium",
         description: "All Winners & Special Awards",
         icon: "🏆",
@@ -239,9 +239,9 @@ export default function ScheduleTable() {
             {/* <div className="col-span-2 font-semibold text-white text-sm">
               Prize
             </div> */}
-            <div className="col-span-1 font-semibold text-white text-sm">
+            {/* <div className="col-span-1 font-semibold text-white text-sm">
               Type
-            </div>
+            </div> */}
           </div>
 
           {/* Table Body */}
@@ -279,9 +279,9 @@ export default function ScheduleTable() {
                         <h4 className="font-bold text-gray-800">
                           {item.event}
                         </h4>
-                        <p className="text-sm text-gray-500 mt-1">
+                        {/* <p className="text-sm text-gray-500 mt-1">
                           {item.description}
-                        </p>
+                        </p> */}
                       </div>
                     </div>
                   </div>
@@ -308,7 +308,7 @@ export default function ScheduleTable() {
                   </div> */}
 
                   {/* Type */}
-                  <div className="col-span-1 flex items-center">
+                  {/* <div className="col-span-1 flex items-center">
                     <span
                       className={`text-xs font-semibold px-3 py-1 rounded-full ${getTypeColor(
                         item.type
@@ -316,7 +316,7 @@ export default function ScheduleTable() {
                     >
                       {item.type.toUpperCase()}
                     </span>
-                  </div>
+                  </div> */}
                 </motion.div>
               )
             )}
