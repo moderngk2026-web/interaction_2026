@@ -167,7 +167,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     debug("Incoming Body", body);
 
-    // Validate required fields
+    // Validate required fields (REMOVED email uniqueness check)
     const requiredFields = [
       "name",
       "email",
@@ -187,26 +187,15 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Check if email already exists
-    const existingRegistration = await prisma.registration.findFirst({
-      where: { email: body.email },
-    });
+    // REMOVED THE EMAIL DUPLICATE CHECK
+    // ---------------------------------
+    // No longer checking: const existingRegistration = await prisma.registration.findFirst(...)
+    // No longer returning 409 error for duplicate emails
+    // ---------------------------------
 
-    if (existingRegistration) {
-      return NextResponse.json(
-        { message: "Email already registered" },
-        { status: 409 }
-      );
-    }
-
-    //-------------------------------------
-    // PROCESS SELECTED EVENTS (FIXED)
-    //-------------------------------------
+    // PROCESS SELECTED EVENTS (same as before)
     debug("Raw selectedEvents from frontend", body.selectedEvents);
 
-    // Extract just the event IDs from the frontend data
-    // Frontend sends: [{id: 1, code: "01", name: "Annual Tech Fest"}]
-    // We need to extract just the IDs: [1]
     let selectedEventIds: number[] = [];
     let selectedEventDetails: EventDetail[] = [];
 
@@ -215,14 +204,12 @@ export async function POST(request: NextRequest) {
         body.selectedEvents.length > 0 &&
         typeof body.selectedEvents[0] === "object"
       ) {
-        // If frontend sends objects, extract IDs
         selectedEventIds = body.selectedEvents.map((event: any) =>
           typeof event === "object" && event.id
             ? Number(event.id)
             : Number(event)
         );
 
-        // Get event details for each ID
         selectedEventDetails = selectedEventIds
           .map((eventId) => {
             const event = eventsData.find((e) => e.id === eventId);
@@ -237,7 +224,6 @@ export async function POST(request: NextRequest) {
           })
           .filter(Boolean) as EventDetail[];
       } else {
-        // If frontend already sends just IDs
         selectedEventIds = body.selectedEvents.map((id: any) => Number(id));
 
         selectedEventDetails = selectedEventIds
@@ -284,31 +270,23 @@ export async function POST(request: NextRequest) {
     // Process payment receipt
     const receiptData = body.paymentReceipt;
 
-    //-------------------------------------
-    // CREATE RECORD (FIXED)
-    //-------------------------------------
     debug("Creating registration with:", {
-      selectedEvents: selectedEventIds, // This should be [1], not [{...}]
+      selectedEvents: selectedEventIds,
       eventCodes,
       eventNames,
       eventDetails: eventDetailsJson,
     });
 
-    // Check your Prisma schema first to see what fields you have
-    // Based on error, your schema has: selectedEvents Int[]
-
+    // CREATE RECORD (ALLOWS DUPLICATE EMAILS)
     const registration = await prisma.registration.create({
       data: {
         name: body.name,
-        email: body.email,
+        email: body.email, // WILL ALLOW DUPLICATES
         mobile: body.mobile,
         collegeId: body.collegeId || null,
-        // Store as array of integers (IDs only)
         selectedEvents: { set: selectedEventIds },
-        // Store event codes and names in separate string fields
         eventCodes: eventCodes,
         eventNames: eventNames,
-        // Store full details as JSON string
         eventDetails: JSON.stringify(eventDetailsJson),
         totalAmount: body.totalAmount,
         registrationToken,
@@ -317,9 +295,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    //-------------------------------------
     // SUCCESS RESPONSE
-    //-------------------------------------
     return NextResponse.json(
       {
         success: true,
@@ -344,12 +320,7 @@ export async function POST(request: NextRequest) {
     console.error("Error message:", error.message);
     console.error("Error code:", error.code);
 
-    if (error.code === "P2002") {
-      return NextResponse.json(
-        { message: "A registration with this email already exists" },
-        { status: 409 }
-      );
-    }
+    // REMOVED P2002 (unique constraint) error handling
 
     if (error.code === "P1001") {
       return NextResponse.json(
