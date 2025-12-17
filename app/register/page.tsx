@@ -346,10 +346,7 @@ export default function RegistrationForm() {
   const submitRegistration = async (receiptUrl: string) => {
     setLoading(true);
     try {
-      // Send just the event IDs (not full objects)
-      const selectedEventIds = selectedEvents; // This should already be [1, 2, 3]
-
-      // But also send event details separately if you need them
+      // Prepare selected events data
       const selectedEventDetails = selectedEvents.map((id) => {
         const event = events.find((e) => e.id === id);
         return {
@@ -359,10 +356,10 @@ export default function RegistrationForm() {
         };
       });
 
+      // IMPORTANT: Send event IDs (numbers), not objects for selectedEvents
       const registrationData = {
         ...formData,
-        selectedEvents: selectedEventIds, // Send just IDs for selectedEvents field
-        selectedEventDetails: selectedEventDetails, // Send details separately
+        selectedEvents: selectedEvents, // Just the array of IDs: [1, 2, 3]
         totalAmount,
         registrationToken,
         paymentReceipt: receiptUrl,
@@ -378,14 +375,27 @@ export default function RegistrationForm() {
         body: JSON.stringify(registrationData),
       });
 
+      const responseData = await response.json();
+
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Registration failed");
+        // Handle specific error statuses
+        if (response.status === 409) {
+          throw new Error(
+            "Email already registered. Please use a different email or check your previous registration."
+          );
+        } else if (response.status === 400) {
+          throw new Error(
+            responseData.message || "Please check all required fields."
+          );
+        } else {
+          throw new Error(responseData.message || "Registration failed");
+        }
       }
 
       setSubmitted(true);
     } catch (error) {
       setError(error instanceof Error ? error.message : "Registration failed");
+      console.error("Registration error:", error);
     } finally {
       setLoading(false);
     }
