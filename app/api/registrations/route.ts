@@ -26,22 +26,18 @@ async function generateRegistrationToken(eventCount: number): Promise<string> {
   const eventCountStr = eventCount.toString().padStart(2, "0");
 
   try {
-    const prefix = `${collegeCode}${year}${eventCountStr}`;
+    // Get total count of ALL registrations (not just with same prefix)
+    const totalCount = await prisma.registration.count();
 
-    const count = await prisma.registration.count({
-      where: {
-        registrationToken: {
-          startsWith: prefix,
-        },
-      },
-    });
+    // Use total count + 1 for unique participant number
+    const participantNumberStr = (totalCount + 1).toString().padStart(4, "0");
 
-    const participantNumberStr = (count + 1).toString().padStart(3, "0");
-    return `${prefix}${participantNumberStr}`;
+    return `${collegeCode}${year}${eventCountStr}${participantNumberStr}`;
   } catch (error) {
     console.error("Error generating token:", error);
-    const fallback = `${Date.now()}`.slice(-3);
-    return `${collegeCode}${year}${eventCountStr}${fallback}`;
+    // Fallback using timestamp
+    const timestamp = Date.now().toString().slice(-4);
+    return `${collegeCode}${year}${eventCountStr}${timestamp}`;
   }
 }
 
