@@ -15,9 +15,9 @@ export default function LayoutWrapper({
 
   return (
     <>
-      {/* {!isDashboard && <Navbar />} */}
+      {!isDashboard && <Navbar />}
       {children}
-      {/* {!isDashboard && <Footer />} */}
+      {!isDashboard && <Footer />}
     </>
   );
 }

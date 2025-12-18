@@ -10,11 +10,11 @@ import Maintenance from "./components/Maintanance";
 export default function Home() {
   return (
     <div>
-      {/* <SidebarNav />
+      <SidebarNav />
       <Hero />
       <AboutSection />
-      <SponsorsMarquee /> */}
-      <Maintenance />
+      <SponsorsMarquee />
+      {/* <Maintenance /> */}
     </div>
     // </WebsiteLayout>
   );
