@@ -157,6 +157,7 @@ export default function RegistrationForm() {
     email: "",
     mobile: "",
     collegeId: "",
+    graduationType: "",
   });
 
   const [selectedEvents, setSelectedEvents] = useState<number[]>([]);
@@ -419,6 +420,10 @@ export default function RegistrationForm() {
       setError("Please upload payment receipt");
       return;
     }
+    if (!formData.graduationType) {
+      setError("Please select graduation type (UG / PG)");
+      return;
+    }
 
     setError("");
 
@@ -600,6 +605,41 @@ export default function RegistrationForm() {
                     className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-transparent"
                     placeholder="Enter your college Name"
                   />
+                </div>
+                <div>
+                  <label className="block text-white/70 text-sm mb-2">
+                    Graduation Type *
+                  </label>
+
+                  <div className="flex gap-6">
+                    {/* UG */}
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="graduationType"
+                        value="UG"
+                        checked={formData.graduationType === "UG"}
+                        onChange={handleInputChange}
+                        className="h-4 w-4 text-yellow-500 focus:ring-yellow-500"
+                        required
+                      />
+                      <span className="text-white">UG</span>
+                    </label>
+
+                    {/* PG */}
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="graduationType"
+                        value="PG"
+                        checked={formData.graduationType === "PG"}
+                        onChange={handleInputChange}
+                        className="h-4 w-4 text-yellow-500 focus:ring-yellow-500"
+                        required
+                      />
+                      <span className="text-white">PG</span>
+                    </label>
+                  </div>
                 </div>
 
                 {/* Events Selection */}

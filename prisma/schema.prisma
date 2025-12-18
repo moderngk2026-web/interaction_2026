@@ -31,6 +31,7 @@ model Registration {
   selectedEvents     Int[]
   eventCodes         String?
   eventNames         String?
+  graduationType  String?
   eventDetails       Json?
   totalAmount        Float
   registrationToken  String    @unique

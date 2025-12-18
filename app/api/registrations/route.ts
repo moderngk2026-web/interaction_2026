@@ -106,6 +106,7 @@ export async function GET(request: NextRequest) {
         email: true,
         mobile: true,
         collegeId: true,
+        graduationType: true,
         selectedEvents: true,
         eventCodes: true,
         eventNames: true,
@@ -171,6 +172,7 @@ export async function POST(request: NextRequest) {
       "selectedEvents",
       "totalAmount",
       "paymentReceipt",
+      "graduationType",
     ];
 
     for (const field of requiredFields) {
@@ -280,6 +282,7 @@ export async function POST(request: NextRequest) {
         email: body.email, // WILL ALLOW DUPLICATES
         mobile: body.mobile,
         collegeId: body.collegeId || null,
+        graduationType: body.graduationType,
         selectedEvents: { set: selectedEventIds },
         eventCodes: eventCodes,
         eventNames: eventNames,

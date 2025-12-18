@@ -87,9 +87,9 @@ export default function AboutSectionWithImages() {
   ];
 
   const eventHighlights = [
-    "Keynote sessions by industry leaders",
-    "National-level hackathon",
-    "Career fair opportunities",
+    "Intercollegiate Competition in different events",
+    "Break fast will be provided",
+    "Exciting prizes and certificates will be provided",
   ];
 
   return (

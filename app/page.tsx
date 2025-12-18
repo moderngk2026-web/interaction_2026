@@ -12,7 +12,7 @@ export default function Home() {
       <SidebarNav />
       <Hero />
       <AboutSection />
-      <ScheduleTable />
+      {/* <ScheduleTable /> */}
       <SponsorsMarquee />
     </div>
     // </WebsiteLayout>
