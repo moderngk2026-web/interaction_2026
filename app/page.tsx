@@ -5,15 +5,16 @@ import ScheduleTable from "./components/ScheduleTable";
 import SponsorsMarquee from "./components/SponsorsMarquee";
 import WebsiteLayout from "./website-layout";
 import SidebarNav from "./components/SidebarNav";
+import Maintenance from "./components/Maintanance";
 
 export default function Home() {
   return (
     <div>
-      <SidebarNav />
+      {/* <SidebarNav />
       <Hero />
       <AboutSection />
-      {/* <ScheduleTable /> */}
-      <SponsorsMarquee />
+      <SponsorsMarquee /> */}
+      <Maintenance />
     </div>
     // </WebsiteLayout>
   );

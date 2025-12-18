@@ -22,7 +22,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-  min-height: 200vh; /* For demo scroll effect */
+  /* min-height: 200vh; For demo scroll effect */
 }
 
 /* Custom scrollbar */
