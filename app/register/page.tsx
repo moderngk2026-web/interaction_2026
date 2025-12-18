@@ -170,6 +170,7 @@ export default function RegistrationForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Generate registration token based on selected events
   const generateToken = useCallback(async () => {
@@ -405,36 +406,44 @@ export default function RegistrationForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // ⛔ Prevent multiple submissions
+    if (isSubmitting) return;
+
+    setIsSubmitting(true); // 🔒 LOCK IMMEDIATELY
+
     // Validation
     if (selectedEvents.length === 0) {
       setError("Please select at least one event");
+      setIsSubmitting(false);
       return;
     }
 
     if (!formData.name || !formData.email || !formData.mobile) {
       setError("Please fill all required fields");
+      setIsSubmitting(false);
       return;
     }
 
     if (!paymentReceipt) {
       setError("Please upload payment receipt");
+      setIsSubmitting(false);
       return;
     }
+
     if (!formData.graduationType) {
       setError("Please select graduation type (UG / PG)");
+      setIsSubmitting(false);
       return;
     }
 
     setError("");
 
     try {
-      // Upload receipt to Cloudinary
       const receiptUrl = await uploadToCloudinary(paymentReceipt);
-
-      // Submit registration to database
       await submitRegistration(receiptUrl);
     } catch (error) {
       setError(error instanceof Error ? error.message : "Submission failed");
+      setIsSubmitting(false); // unlock only on failure
     }
   };
 
@@ -464,6 +473,13 @@ export default function RegistrationForm() {
       [e.target.name]: e.target.value,
     });
   };
+
+  const isSubmitDisabled =
+    isSubmitting ||
+    loading ||
+    uploading ||
+    selectedEvents.length === 0 ||
+    !paymentReceipt;
 
   // Generate UPI payment string
   const generateUPIString = () => {
@@ -513,7 +529,7 @@ export default function RegistrationForm() {
           </motion.div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-1 gap-8">
           {/* Left Column: Registration Form */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -931,22 +947,150 @@ export default function RegistrationForm() {
                   )}
                 </div>
 
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="space-y-8"
+                >
+                  {/* Payment Receipt Upload */}
+                  <div className="pt-6 border-t border-white/10">
+                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                      <Upload className="w-5 h-5 text-green-400" />
+                      Upload Payment Receipt
+                    </h3>
+                    <p className="text-white/60 text-sm mb-4">
+                      Upload screenshot of payment confirmation
+                    </p>
+
+                    <Dropzone
+                      onDrop={handleDrop}
+                      accept={{
+                        "image/*": [".jpeg", ".jpg", ".png"],
+                        "application/pdf": [".pdf"],
+                      }}
+                      maxSize={5 * 1024 * 1024} // 5MB
+                      disabled={uploading}
+                    >
+                      {({ getRootProps, getInputProps, isDragActive }) => (
+                        <div
+                          {...getRootProps()}
+                          className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-300 ${
+                            isDragActive
+                              ? "border-yellow-400 bg-yellow-500/10"
+                              : "border-white/20 hover:border-yellow-400 hover:bg-white/5"
+                          } ${
+                            uploading ? "opacity-50 cursor-not-allowed" : ""
+                          }`}
+                        >
+                          <input {...getInputProps()} />
+                          {uploading ? (
+                            <div className="flex flex-col items-center">
+                              <Loader2 className="w-12 h-12 text-yellow-400 animate-spin mb-4" />
+                              <p className="text-white">Uploading...</p>
+                            </div>
+                          ) : paymentReceipt ? (
+                            <div className="relative">
+                              {receiptPreview ? (
+                                <div className="relative mx-auto w-48 h-48 rounded-lg overflow-hidden border border-white/20">
+                                  <img
+                                    src={receiptPreview}
+                                    alt="Receipt preview"
+                                    className="w-full h-full object-contain"
+                                  />
+                                </div>
+                              ) : (
+                                <div className="p-4 bg-white/5 rounded-lg">
+                                  <div className="text-white font-medium mb-2">
+                                    {paymentReceipt.name}
+                                  </div>
+                                  <div className="text-white/60 text-sm">
+                                    {(paymentReceipt.size / 1024).toFixed(2)} KB
+                                  </div>
+                                </div>
+                              )}
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  removeReceipt();
+                                }}
+                                className="absolute -top-2 -right-2 p-1 bg-red-500 hover:bg-red-600 rounded-full"
+                              >
+                                <X className="w-4 h-4 text-white" />
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="space-y-4">
+                              <Upload className="w-12 h-12 text-white/50 mx-auto" />
+                              <div>
+                                <p className="text-white font-medium mb-2">
+                                  {isDragActive
+                                    ? "Drop the file here"
+                                    : "Drag & drop payment receipt"}
+                                </p>
+                                <p className="text-white/60 text-sm">
+                                  or click to select file
+                                </p>
+                              </div>
+                              <p className="text-white/50 text-xs">
+                                Supports: JPG, PNG, PDF (Max 5MB)
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </Dropzone>
+                  </div>
+
+                  {/* Important Notes */}
+                  <div className="bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
+                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                      <AlertCircle className="w-5 h-5 text-yellow-400" />
+                      Important Notes
+                    </h3>
+                    <ul className="space-y-3 text-white/70">
+                      <li className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-2"></div>
+                        <span>
+                          Each event costs ₹100. Select multiple events to pay
+                          combined amount.
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-2"></div>
+                        <span>
+                          <strong>Registration Token:</strong> MCGK2026
+                          <span className="text-yellow-400">XX</span>
+                          <span className="text-green-400">YYY</span>
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-2"></div>
+                        <span>XX = Number of selected events (01-06)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-2"></div>
+                        <span>YYY = Your unique participant number</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-2"></div>
+                        <span>Save your token - required for event entry</span>
+                      </li>
+                    </ul>
+                  </div>
+                </motion.div>
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  disabled={
-                    selectedEvents.length === 0 ||
-                    !paymentReceipt ||
-                    uploading ||
-                    loading
-                  }
+                  disabled={isSubmitDisabled}
                   className={`w-full py-3 rounded-lg font-bold transition-all duration-300 flex items-center justify-center gap-2 ${
-                    selectedEvents.length === 0 || !paymentReceipt || uploading
+                    isSubmitting || loading || uploading
                       ? "bg-white/10 text-white/50 cursor-not-allowed"
                       : "bg-gradient-to-r from-yellow-500 to-pink-500 hover:from-yellow-600 hover:to-pink-600 text-white hover:scale-105"
                   }`}
                 >
-                  {loading ? (
+                  {isSubmitting || loading ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
                       Processing...
@@ -1051,137 +1195,6 @@ export default function RegistrationForm() {
           </motion.div>
 
           {/* Right Column: QR Code & Payment Details */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-            className="space-y-8"
-          >
-            {/* Payment Receipt Upload */}
-            <div className="pt-6 border-t border-white/10">
-              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <Upload className="w-5 h-5 text-green-400" />
-                Upload Payment Receipt
-              </h3>
-              <p className="text-white/60 text-sm mb-4">
-                Upload screenshot of payment confirmation
-              </p>
-
-              <Dropzone
-                onDrop={handleDrop}
-                accept={{
-                  "image/*": [".jpeg", ".jpg", ".png"],
-                  "application/pdf": [".pdf"],
-                }}
-                maxSize={5 * 1024 * 1024} // 5MB
-                disabled={uploading}
-              >
-                {({ getRootProps, getInputProps, isDragActive }) => (
-                  <div
-                    {...getRootProps()}
-                    className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-300 ${
-                      isDragActive
-                        ? "border-yellow-400 bg-yellow-500/10"
-                        : "border-white/20 hover:border-yellow-400 hover:bg-white/5"
-                    } ${uploading ? "opacity-50 cursor-not-allowed" : ""}`}
-                  >
-                    <input {...getInputProps()} />
-                    {uploading ? (
-                      <div className="flex flex-col items-center">
-                        <Loader2 className="w-12 h-12 text-yellow-400 animate-spin mb-4" />
-                        <p className="text-white">Uploading...</p>
-                      </div>
-                    ) : paymentReceipt ? (
-                      <div className="relative">
-                        {receiptPreview ? (
-                          <div className="relative mx-auto w-48 h-48 rounded-lg overflow-hidden border border-white/20">
-                            <img
-                              src={receiptPreview}
-                              alt="Receipt preview"
-                              className="w-full h-full object-contain"
-                            />
-                          </div>
-                        ) : (
-                          <div className="p-4 bg-white/5 rounded-lg">
-                            <div className="text-white font-medium mb-2">
-                              {paymentReceipt.name}
-                            </div>
-                            <div className="text-white/60 text-sm">
-                              {(paymentReceipt.size / 1024).toFixed(2)} KB
-                            </div>
-                          </div>
-                        )}
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            removeReceipt();
-                          }}
-                          className="absolute -top-2 -right-2 p-1 bg-red-500 hover:bg-red-600 rounded-full"
-                        >
-                          <X className="w-4 h-4 text-white" />
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="space-y-4">
-                        <Upload className="w-12 h-12 text-white/50 mx-auto" />
-                        <div>
-                          <p className="text-white font-medium mb-2">
-                            {isDragActive
-                              ? "Drop the file here"
-                              : "Drag & drop payment receipt"}
-                          </p>
-                          <p className="text-white/60 text-sm">
-                            or click to select file
-                          </p>
-                        </div>
-                        <p className="text-white/50 text-xs">
-                          Supports: JPG, PNG, PDF (Max 5MB)
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </Dropzone>
-            </div>
-
-            {/* Important Notes */}
-            <div className="bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
-              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <AlertCircle className="w-5 h-5 text-yellow-400" />
-                Important Notes
-              </h3>
-              <ul className="space-y-3 text-white/70">
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-2"></div>
-                  <span>
-                    Each event costs ₹100. Select multiple events to pay
-                    combined amount.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-2"></div>
-                  <span>
-                    <strong>Registration Token:</strong> MCGK2026
-                    <span className="text-yellow-400">XX</span>
-                    <span className="text-green-400">YYY</span>
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-2"></div>
-                  <span>XX = Number of selected events (01-06)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-2"></div>
-                  <span>YYY = Your unique participant number</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-2"></div>
-                  <span>Save your token - required for event entry</span>
-                </li>
-              </ul>
-            </div>
-          </motion.div>
         </div>
 
         {/* Footer */}
