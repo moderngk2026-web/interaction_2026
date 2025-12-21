@@ -11,6 +11,7 @@ import {
   MapPin,
   Calendar,
   Send,
+  Map as MapIcon,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -18,9 +19,6 @@ export default function Footer() {
   const quickLinks = [
     { name: "Home", href: "/" },
     { name: "Events", href: "/events" },
-    // { name: "Schedule", href: "/schedule" },
-    // { name: "Speakers", href: "/speakers" },
-    // { name: "Sponsors", href: "/sponsors" },
     { name: "Contact", href: "/contact" },
   ];
 
@@ -32,13 +30,17 @@ export default function Footer() {
     { icon: Youtube, href: "https://youtube.com", label: "YouTube" },
   ];
 
+  const mapUrl = "https://maps.app.goo.gl/vpo93UQnrBTwfSrTA";
+  const embedUrl =
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.46098553569!2d73.824437!3d18.520456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf8962db8f3b%3A0x6c5c4c7b3d5f5f5f!2sModern%20College%20of%20Arts%2C%20Science%20and%20Commerce%20(Autonomous)%2C%20Pune!5e0!3m2!1sen!2sin!4v1638361234567!5m2!1sen!2sin";
+
   return (
     <footer className="bg-gray-900 text-white">
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Brand & Description */}
-          <div className="space-y-4">
+          <div className="space-y-4 lg:col-span-2">
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
                 <span className="font-bold text-white">I</span>
@@ -62,6 +64,8 @@ export default function Footer() {
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-gray-800 hover:bg-blue-600 flex items-center justify-center transition-colors"
                 >
                   <social.icon className="w-5 h-5" />
@@ -95,7 +99,7 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-4 text-white">
               Event Info
             </h4>
-            <ul className="space-y-4">
+            <ul className="space-y-4 mb-4">
               <li className="flex items-start gap-3">
                 <Calendar className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
                 <div>
@@ -110,50 +114,69 @@ export default function Footer() {
                 <div>
                   <div className="font-medium">Venue</div>
                   <div className="text-gray-400 text-sm">
-                    Modern College, Ganeshkhind, Pune - 411016
+                    Modern College, Ganeshkhind
                   </div>
+                  <div className="text-gray-400 text-sm">Pune - 411016</div>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <Phone className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <div className="font-medium">Contact</div>
-                  <div className="text-gray-400 text-sm">
-                    +91 9309034640 / +91 7038622958
-                  </div>
+                  <div className="text-gray-400 text-sm">+91 9309034640</div>
+                  <div className="text-gray-400 text-sm">+91 7038622958</div>
                 </div>
               </li>
             </ul>
+
+            {/* Map Link Button */}
+            {/* <a
+              href={mapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-medium"
+            >
+              <MapIcon className="w-4 h-4" />
+              Open in Google Maps
+            </a> */}
           </div>
 
-          {/* Newsletter */}
-          {/* <div>
-            <h4 className="text-lg font-semibold mb-4 text-white">
-              Stay Updated
+          {/* Google Map */}
+          <div className="lg:col-span-1">
+            <h4 className="text-lg font-semibold mb-4 text-white flex items-center gap-2">
+              <MapIcon className="w-5 h-5" />
+              Location
             </h4>
-            <p className="text-gray-400 text-sm mb-4">
-              Subscribe to get updates about events and announcements.
-            </p>
-
-            <form className="space-y-3">
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  className="flex-1 px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+            <div className="space-y-4">
+              {/* Map Container */}
+              <div className="rounded-lg overflow-hidden shadow-lg border border-gray-700">
+                <iframe
+                  src={embedUrl}
+                  width="100%"
+                  height="200"
+                  style={{ border: 0 }}
+                  allowFullScreen={true}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Modern College of Arts, Science and Commerce Location"
+                  className="w-full h-48 md:h-52"
                 />
-                <button
-                  type="submit"
-                  className="px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2"
-                >
-                  <Send className="w-4 h-4" />
-                </button>
               </div>
-              <p className="text-gray-500 text-xs">
-                We respect your privacy. Unsubscribe at any time.
-              </p>
-            </form>
-          </div> */}
+
+              {/* Address */}
+              <div className="bg-gray-800/50 rounded-lg p-3">
+                <p className="text-gray-300 text-sm">
+                  <strong className="text-white">Modern College</strong>
+                  <br />
+                  Ganeshkhind Road
+                  <br />
+                  Pune, Maharashtra 411016
+                  <br />
+                  India
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -164,37 +187,18 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           {/* Copyright */}
-          <div className="text-gray-500 text-sm">
-            © 2026 Interaction. All rights reserved.
+          <div className="text-gray-500 text-sm text-center md:text-left">
+            © 2026 Interaction. All rights reserved. | Organized by Department
+            of Computer Science
           </div>
 
-          {/* Policy Links */}
-          {/* <div className="flex flex-wrap gap-6">
-            <Link
-              href="/privacy"
-              className="text-gray-400 hover:text-white text-sm transition-colors"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/terms"
-              className="text-gray-400 hover:text-white text-sm transition-colors"
-            >
-              Terms of Service
-            </Link>
-            <Link
-              href="/cookies"
-              className="text-gray-400 hover:text-white text-sm transition-colors"
-            >
-              Cookie Policy
-            </Link>
-            <Link
-              href="/code-of-conduct"
-              className="text-gray-400 hover:text-white text-sm transition-colors"
-            >
-              Code of Conduct
-            </Link>
-          </div> */}
+          {/* College Info */}
+          <div className="text-gray-400 text-xs text-center md:text-right">
+            <p>Modern College of Arts, Science & Commerce (Autonomous)</p>
+            <p className="mt-1">
+              Affiliated to Savitribai Phule Pune University
+            </p>
+          </div>
         </div>
       </div>
     </footer>

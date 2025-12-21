@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Download } from "lucide-react";
 import Image from "next/image";
 
 interface NavItem {
@@ -84,6 +84,19 @@ export default function Navbar() {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  // Function to handle PDF download
+  const handleDownloadRuleBook = () => {
+    const pdfUrl = "/pdf/rule_book_interaction.pdf"; // Replace with your actual PDF path
+
+    // Create a temporary anchor element for download
+    const link = document.createElement("a");
+    link.href = pdfUrl;
+    link.download = "INTERACTION-2026-Rulebook.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -180,7 +193,7 @@ export default function Navbar() {
               </motion.div>
 
               {/* Desktop Navigation */}
-              <div className="hidden md:flex items-center space-x-1">
+              <div className="hidden md:flex items-center space-x-2">
                 {navItems.map((item, index) => (
                   <motion.div
                     key={item.name}
@@ -203,6 +216,26 @@ export default function Navbar() {
                   </motion.div>
                 ))}
 
+                {/* Download Rule Book Button (Small) */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.5, duration: 0.3 }}
+                >
+                  <button
+                    onClick={handleDownloadRuleBook}
+                    className={`px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1 transition-all duration-300 ${
+                      isScrolled
+                        ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:shadow-lg hover:scale-105 hover:shadow-blue-500/30"
+                        : "bg-gradient-to-r from-blue-400 to-purple-400 text-white hover:shadow-lg hover:scale-105 hover:shadow-blue-400/30"
+                    }`}
+                    title="Download Rule Book"
+                  >
+                    <Download size={12} />
+                    <span className="hidden sm:inline">Rulebook</span>
+                  </button>
+                </motion.div>
+
                 {/* Register/Login Button */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -211,7 +244,7 @@ export default function Navbar() {
                 >
                   <Link
                     href="/register"
-                    className="ml-4 px-6 py-2.5 bg-gradient-to-r from-yellow-500 to-pink-500 text-white font-bold rounded-full hover:shadow-xl hover:scale-105 transition-all duration-300 transform hover:shadow-yellow-500/30 text-sm"
+                    className="ml-1 px-5 py-2 bg-gradient-to-r from-yellow-500 to-pink-500 text-white font-bold rounded-full hover:shadow-xl hover:scale-105 transition-all duration-300 transform hover:shadow-yellow-500/30 text-sm"
                   >
                     REGISTER
                   </Link>
@@ -265,12 +298,31 @@ export default function Navbar() {
                     </motion.div>
                   ))}
 
+                  {/* Mobile Download Rule Book Button */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="pt-2"
+                  >
+                    <button
+                      onClick={() => {
+                        handleDownloadRuleBook();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="block mx-2 px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold text-center rounded-xl hover:shadow-xl transition-all duration-300 text-sm flex items-center justify-center gap-2"
+                    >
+                      <Download size={16} />
+                      Download Rule Book
+                    </button>
+                  </motion.div>
+
                   {/* Mobile Register Button */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6 }}
-                    className="pt-3"
+                    className="pt-2"
                   >
                     <Link
                       href="/register"

@@ -12,6 +12,7 @@ import {
   Mic,
   Code,
   Trophy,
+  Download,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -45,6 +46,27 @@ export default function Hero() {
 
     return () => clearInterval(timer);
   }, []);
+
+  // Function to handle PDF download
+  const handleDownloadRuleBook = () => {
+    // Option 1: Direct link to PDF file
+    const pdfUrl = "/pdf/rule_book_interaction.pdf"; // Replace with your actual PDF path
+
+    // Create a temporary anchor element
+    const link = document.createElement("a");
+    link.href = pdfUrl;
+    link.download = "INTERACTION-2026-Rulebook.pdf"; // Suggested filename
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Option 2: If you want to open in new tab instead of download
+    // window.open(pdfUrl, '_blank');
+
+    // Option 3: If you need to trigger analytics or tracking
+    // console.log("Rulebook download initiated");
+    // Add your analytics tracking here
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -153,22 +175,13 @@ export default function Hero() {
             </span>
           </motion.h1>
 
-          {/* Subtitle */}
-          {/* <motion.p
-            variants={itemVariants}
-            className="text-2xl md:text-4xl font-bold text-white mb-8"
-          >
-            Where <span className="text-yellow-400">Ideas</span> Collide &{" "}
-            <span className="text-pink-400">Innovation</span> Thrives
-          </motion.p> */}
-
           {/* Description */}
           <motion.p
             variants={itemVariants}
             className="text-xl text-white/80 max-w-3xl mx-auto mb-12"
           >
-            Join the vibe, join the fun — your presence adds the spark! Let’s
-            turn this event into a memory you’ll never forget!
+            Join the vibe, join the fun — your presence adds the spark! Let's
+            turn this event into a memory you'll never forget!
           </motion.p>
 
           {/* Event Details */}
@@ -183,24 +196,6 @@ export default function Hero() {
                 value: "Jan 09-10, 2026",
                 color: "text-yellow-400",
               },
-              //   {
-              //     icon: MapPin,
-              //     label: "Venue",
-              //     value: "University Main Campus",
-              //     color: "text-pink-400",
-              //   },
-              // {
-              //   icon: Users,
-              //   label: "Participants",
-              //   value: "500+",
-              //   color: "text-purple-400",
-              // },
-              //   {
-              //     icon: Clock,
-              //     label: "Duration",
-              //     value: "3 Days",
-              //     color: "text-blue-400",
-              //   },
             ].map((item, index) => (
               <div
                 key={index}
@@ -214,25 +209,6 @@ export default function Hero() {
               </div>
             ))}
           </motion.div>
-
-          {/* Countdown Timer */}
-          {/* <motion.div variants={itemVariants} className="mb-12">
-            <h3 className="text-white/60 text-lg mb-4">Event Starts In</h3>
-            <div className="flex justify-center gap-4">
-              {Object.entries(timeLeft).map(([unit, value]) => (
-                <div key={unit} className="flex flex-col items-center">
-                  <div className="w-20 h-20 bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/10">
-                    <span className="text-3xl font-bold text-white">
-                      {value.toString().padStart(2, "0")}
-                    </span>
-                  </div>
-                  <span className="text-white/60 text-sm mt-2 uppercase">
-                    {unit}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </motion.div> */}
 
           {/* CTA Buttons */}
           <motion.div
@@ -248,15 +224,17 @@ export default function Hero() {
                 Register Now
               </motion.button>
             </Link>
-            <Link href="/schedule">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-18 py-3 bg-white/10 backdrop-blur-sm text-white font-bold text-lg rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300"
-              >
-                View Schedule
-              </motion.button>
-            </Link>
+
+            {/* Download Rule Book Button */}
+            <motion.button
+              onClick={handleDownloadRuleBook}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-18 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold text-lg rounded-full hover:shadow-2xl hover:shadow-blue-500/30 transition-all duration-300 flex items-center justify-center gap-2"
+            >
+              <Download className="w-5 h-5" />
+              Download Rule Book
+            </motion.button>
           </motion.div>
         </motion.div>
       </div>
