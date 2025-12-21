@@ -569,13 +569,13 @@ export default function RegistrationsPage() {
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
-                          <button
+                          {/* <button
                             onClick={() => handleEdit(registration)}
                             className="p-2 bg-blue-500/10 hover:bg-blue-500/20 rounded-lg transition-colors text-blue-400"
                             title="Edit"
                           >
                             <Edit className="w-4 h-4" />
-                          </button>
+                          </button> */}
                           <button
                             onClick={() => handleDelete(registration)}
                             className="p-2 bg-red-500/10 hover:bg-red-500/20 rounded-lg transition-colors text-red-400"
