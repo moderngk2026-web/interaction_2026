@@ -112,7 +112,7 @@ export default function DashboardLayout({
       icon: Users,
       label: "Registrations",
       href: "/dashboard/registrations",
-      badge: 24,
+      // badge: 24,
       allowedRoles: ["SuperAdmin"],
     },
     // {

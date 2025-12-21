@@ -487,12 +487,12 @@ export default function RegistrationForm() {
       amount: totalAmount,
       upiId: "7498980121@ybl",
       name: "College Events",
-      message: `Registration for ${selectedEvents.length} event(s) - Token: ${registrationToken}`,
+      // message: `Registration for ${selectedEvents.length} event(s) - Token: ${registrationToken}`,
     };
 
     return `upi://pay?pa=${config.upiId}&pn=${encodeURIComponent(
       config.name
-    )}&am=${config.amount}&tn=${encodeURIComponent(config.message)}&cu=INR`;
+    )}&am=${config.amount}&cu=INR`;
   };
 
   return (
