@@ -52,6 +52,7 @@ interface Pagination {
   total: number;
   totalPages: number;
 }
+type UserRole = "SuperAdmin" | "Admin" | "user";
 
 export default function RegistrationsPage() {
   const [registrations, setRegistrations] = useState<Registration[]>([]);
@@ -64,6 +65,10 @@ export default function RegistrationsPage() {
     total: 0,
     totalPages: 1,
   });
+  // Add this type near your other interfaces
+
+  // Inside your component, add this state:
+  const [userRole, setUserRole] = useState<UserRole>("Admin"); // Default to admin for safety
 
   // Modal states
   const [imageModalOpen, setImageModalOpen] = useState(false);
@@ -72,6 +77,18 @@ export default function RegistrationsPage() {
   const [registrationToDelete, setRegistrationToDelete] =
     useState<Registration | null>(null);
   const [approvingId, setApprovingId] = useState<number | null>(null);
+
+  useEffect(() => {
+    const adminData = localStorage.getItem("admin");
+    const role = adminData
+      ? (JSON.parse(adminData)?.role as UserRole)
+      : "Admin";
+
+    console.log(role);
+    if (role) {
+      setUserRole(role);
+    }
+  }, []);
 
   const fetchRegistrations = async (page = 1) => {
     setLoading(true);
@@ -476,9 +493,11 @@ export default function RegistrationsPage() {
                     <th className="text-left px-6 py-4 text-white/60 font-medium">
                       Date
                     </th>
-                    <th className="text-left px-6 py-4 text-white/60 font-medium">
-                      Actions
-                    </th>
+                    {userRole === "SuperAdmin" && (
+                      <th className="text-left px-6 py-4 text-white/60 font-medium">
+                        Actions
+                      </th>
+                    )}
                   </tr>
                 </thead>
                 <tbody>
@@ -571,31 +590,33 @@ export default function RegistrationsPage() {
                           ).toLocaleDateString()}
                         </div>
                       </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => handleDelete(registration)}
-                            className="p-2 bg-red-500/10 hover:bg-red-500/20 rounded-lg transition-colors text-red-400"
-                            title="Delete"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                          {!registration.paymentVerified && (
+                      {userRole === "SuperAdmin" && (
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-2">
                             <button
-                              onClick={() => handleApprove(registration)}
-                              disabled={approvingId === registration.id}
-                              className="p-2 bg-green-500/10 hover:bg-green-500/20 rounded-lg transition-colors text-green-400 disabled:opacity-50"
-                              title="Approve and Send Email"
+                              onClick={() => handleDelete(registration)}
+                              className="p-2 bg-red-500/10 hover:bg-red-500/20 rounded-lg transition-colors text-red-400"
+                              title="Delete"
                             >
-                              {approvingId === registration.id ? (
-                                <div className="w-4 h-4 border-2 border-green-400 border-t-transparent rounded-full animate-spin"></div>
-                              ) : (
-                                <Send className="w-4 h-4" />
-                              )}
+                              <Trash2 className="w-4 h-4" />
                             </button>
-                          )}
-                        </div>
-                      </td>
+                            {!registration.paymentVerified && (
+                              <button
+                                onClick={() => handleApprove(registration)}
+                                disabled={approvingId === registration.id}
+                                className="p-2 bg-green-500/10 hover:bg-green-500/20 rounded-lg transition-colors text-green-400 disabled:opacity-50"
+                                title="Approve and Send Email"
+                              >
+                                {approvingId === registration.id ? (
+                                  <div className="w-4 h-4 border-2 border-green-400 border-t-transparent rounded-full animate-spin"></div>
+                                ) : (
+                                  <Send className="w-4 h-4" />
+                                )}
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                      )}
                     </tr>
                   ))}
                 </tbody>
@@ -634,7 +655,7 @@ export default function RegistrationsPage() {
       </div>
 
       {/* Selected Actions */}
-      {selectedRows.length > 0 && (
+      {selectedRows.length > 0 && userRole === "SuperAdmin" && (
         <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-pink-500 to-purple-500 rounded-xl shadow-2xl p-4 flex items-center gap-4">
           <span className="text-white font-medium">
             {selectedRows.length} item{selectedRows.length > 1 ? "s" : ""}{" "}

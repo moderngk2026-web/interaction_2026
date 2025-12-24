@@ -113,7 +113,7 @@ export default function DashboardLayout({
       label: "Registrations",
       href: "/dashboard/registrations",
       // badge: 24,
-      allowedRoles: ["SuperAdmin"],
+      allowedRoles: ["SuperAdmin", "Admin"],
     },
     // {
     //   icon: Calendar,
