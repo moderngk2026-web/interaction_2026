@@ -1220,7 +1220,7 @@ export default function RegistrationForm() {
               href="tel:+911234567890"
               className="text-yellow-400 hover:underline"
             >
-              +91 9309034640
+              +91 7038622958
             </a>
           </p>
         </motion.div>
