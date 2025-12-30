@@ -5,18 +5,10 @@ import Image from "next/image";
 
 const contactData = {
   email: "moderngk2026@gmail.com",
-  phone: "+91 9309034640",
+  phone: "+91 7038622958",
   location: "Modern College, Ganeshkhind, Pune - 411016",
 
   studentCoordinators: [
-    {
-      name: "Herambh Kadam",
-      phone: "+91 9309034640",
-      // email: "rahul.sharma@college.edu",
-      image: "/images/heramb.jpg",
-      department: "Computer Science",
-      year: "Final Year",
-    },
     {
       name: "Sarthak Meher",
       phone: "+91 7038622958",

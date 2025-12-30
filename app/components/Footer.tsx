@@ -123,7 +123,7 @@ export default function Footer() {
                 <Phone className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <div className="font-medium">Contact</div>
-                  <div className="text-gray-400 text-sm">+91 9309034640</div>
+                  {/* <div className="text-gray-400 text-sm">+91 9309034640</div> */}
                   <div className="text-gray-400 text-sm">+91 7038622958</div>
                 </div>
               </li>
