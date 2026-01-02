@@ -63,7 +63,7 @@ const events: Event[] = [
     name: "Gamer Strike",
     price: 100,
     description: "Gamer Strike",
-    maxParticipants: 50,
+    maxParticipants: 100,
     currentParticipants: 45,
   },
   {

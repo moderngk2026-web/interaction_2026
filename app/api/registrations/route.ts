@@ -18,27 +18,65 @@ function debug(label: string, value: any) {
 }
 
 //-------------------------------------
-// TOKEN GENERATION
+// TOKEN GENERATION (FIXED)
 //-------------------------------------
 async function generateRegistrationToken(eventCount: number): Promise<string> {
   const collegeCode = "MCGK";
   const year = "2026";
   const eventCountStr = eventCount.toString().padStart(2, "0");
 
-  try {
-    // Get total count of ALL registrations (not just with same prefix)
-    const totalCount = await prisma.registration.count();
+  let attempts = 0;
+  const maxAttempts = 5;
 
-    // Use total count + 1 for unique participant number
-    const participantNumberStr = (totalCount + 1).toString().padStart(4, "0");
+  while (attempts < maxAttempts) {
+    try {
+      // Get current timestamp for uniqueness
+      const timestamp = Date.now().toString();
 
-    return `${collegeCode}${year}${eventCountStr}${participantNumberStr}`;
-  } catch (error) {
-    console.error("Error generating token:", error);
-    // Fallback using timestamp
-    const timestamp = Date.now().toString().slice(-4);
-    return `${collegeCode}${year}${eventCountStr}${timestamp}`;
+      // Use different parts of timestamp for more randomness
+      const tsPart1 = timestamp.slice(-6, -3);
+      const tsPart2 = timestamp.slice(-3);
+
+      // Add random number for extra uniqueness
+      const randomNum = Math.floor(100 + Math.random() * 900);
+
+      // Generate token with timestamp and random number
+      const token = `${collegeCode}${year}${eventCountStr}${tsPart1}${randomNum}${tsPart2}`;
+
+      // Check if token already exists
+      const existing = await prisma.registration.findUnique({
+        where: { registrationToken: token },
+      });
+
+      if (!existing) {
+        return token; // Token is unique
+      }
+
+      attempts++;
+      console.log(`Token ${token} exists, attempt ${attempts}/${maxAttempts}`);
+
+      // Wait a bit before retrying (to get new timestamp)
+      if (attempts < maxAttempts) {
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
+    } catch (error) {
+      console.error("Error in token generation:", error);
+      // Fallback using random UUID
+      const uuidPart = Math.random()
+        .toString(36)
+        .substring(2, 10)
+        .toUpperCase();
+      return `${collegeCode}${year}${eventCountStr}${uuidPart}`;
+    }
   }
+
+  // If all attempts fail, use crypto-based random string
+  const cryptoPart = Array.from(crypto.getRandomValues(new Uint8Array(4)))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("")
+    .toUpperCase();
+
+  return `${collegeCode}${year}${eventCountStr}${cryptoPart}`;
 }
 
 //-------------------------------------
@@ -164,7 +202,13 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     debug("Incoming Body", body);
 
-    // Validate required fields (REMOVED email uniqueness check)
+    // REMOVE registrationToken from body if it exists
+    const { registrationToken: frontendToken, ...cleanBody } = body;
+    if (frontendToken) {
+      console.log(`⚠️ Frontend sent token: ${frontendToken} (will be ignored)`);
+    }
+
+    // Validate required fields (REMOVED registrationToken)
     const requiredFields = [
       "name",
       "email",
@@ -176,7 +220,7 @@ export async function POST(request: NextRequest) {
     ];
 
     for (const field of requiredFields) {
-      if (!body[field]) {
+      if (!cleanBody[field]) {
         debug("Missing Field", field);
         return NextResponse.json(
           { message: `${field} is required` },
@@ -265,30 +309,45 @@ export async function POST(request: NextRequest) {
     const eventCount = selectedEventIds.length;
     const registrationToken = await generateRegistrationToken(eventCount);
 
+    debug("Generated Token", registrationToken);
+
     // Process payment receipt
-    const receiptData = body.paymentReceipt;
+    const receiptData = cleanBody.paymentReceipt;
+
+    // Check if generated token already exists
+    const existingToken = await prisma.registration.findUnique({
+      where: { registrationToken },
+    });
+
+    if (existingToken) {
+      // Regenerate token if duplicate
+      console.log(`Token ${registrationToken} exists, regenerating...`);
+      const newToken = await generateRegistrationToken(eventCount);
+      debug("Regenerated Token", newToken);
+    }
 
     debug("Creating registration with:", {
       selectedEvents: selectedEventIds,
       eventCodes,
       eventNames,
       eventDetails: eventDetailsJson,
+      token: registrationToken,
     });
 
-    // CREATE RECORD (ALLOWS DUPLICATE EMAILS)
+    // CREATE RECORD
     const registration = await prisma.registration.create({
       data: {
-        name: body.name,
-        email: body.email, // WILL ALLOW DUPLICATES
-        mobile: body.mobile,
-        collegeId: body.collegeId || null,
-        graduationType: body.graduationType,
+        name: cleanBody.name,
+        email: cleanBody.email,
+        mobile: cleanBody.mobile,
+        collegeId: cleanBody.collegeId || null,
+        graduationType: cleanBody.graduationType,
         selectedEvents: { set: selectedEventIds },
         eventCodes: eventCodes,
         eventNames: eventNames,
         eventDetails: JSON.stringify(eventDetailsJson),
-        totalAmount: body.totalAmount,
-        registrationToken,
+        totalAmount: cleanBody.totalAmount,
+        registrationToken, // Use ONLY the generated token
         paymentReceipt: receiptData,
         paymentVerified: false,
       },
