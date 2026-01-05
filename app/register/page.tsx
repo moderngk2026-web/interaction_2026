@@ -57,15 +57,15 @@ const events: Event[] = [
     maxParticipants: 200,
     currentParticipants: 180,
   },
-  {
-    id: 4,
-    code: "04",
-    name: "Gamer Strike",
-    price: 100,
-    description: "Gamer Strike",
-    maxParticipants: 100,
-    currentParticipants: 45,
-  },
+  // {
+  //   id: 4,
+  //   code: "04",
+  //   name: "Gamer Strike",
+  //   price: 100,
+  //   description: "Gamer Strike",
+  //   maxParticipants: 100,
+  //   currentParticipants: 45,
+  // },s
   {
     id: 5,
     code: "05",
