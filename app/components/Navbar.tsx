@@ -28,11 +28,11 @@ function TopHeader() {
         <div className="flex-shrink-0">
           <div className="w-16 h-16 rounded-lg flex items-center justify-center shadow-lg">
             <Image
-              src="/images/collegelogo.jpg"
-              alt="PES Logo"
+              src="/images/logo.jpg"
+              alt="Indira Logo"
               width={48}
               height={48}
-              className="object-contain w-24 h-24"
+              className="object-contain w-30 h-24"
             />
           </div>
         </div>
@@ -40,29 +40,29 @@ function TopHeader() {
         {/* Middle: College Information - Mobile responsive text */}
         <div className="flex-1 mx-4">
           <div className="flex flex-col items-center text-center">
-            <h1 className="text-sm font-bold text-white tracking-tight leading-tight">
+            {/* <h1 className="text-sm font-bold text-white tracking-tight leading-tight">
               PROGRESSIVE EDUCATION SOCIETY&apos;S
-            </h1>
-            <h2 className="text-lg font-semibold text-yellow-300 mt-0.5 leading-tight">
-              MODERN COLLEGE OF ARTS, SCIENCE & COMMERCE (AUTONOMOUS)
+            </h1> */}
+            <h2 className="text-3xl font-semibold text-yellow-300 mt-0.5 leading-tigh uppercase tracking-wide">
+              Indira University, Pune
             </h2>
-            <p className="text-xs text-gray-200 mt-0.5 leading-tight">
+            {/* <p className="text-xs text-gray-200 mt-0.5 leading-tight">
               Ganeshkhind, Pune - 411016
-            </p>
-            <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-x-2 gap-y-0.5 mt-0.5">
-              <p className="text-[10px] text-gray-300 leading-tight">
+            </p> */}
+            {/* <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-x-2 gap-y-0.5 mt-0.5"> */}
+            {/* <p className="text-[10px] text-gray-300 leading-tight">
                 Affiliated to Savitribai Phule Pune University, Pune
-              </p>
-              {/* <span className="hidden sm:inline text-gray-400">|</span>
+              </p> */}
+            {/* <span className="hidden sm:inline text-gray-400">|</span>
               <p className="text-[10px] text-green-300 font-medium leading-tight">
                 Re-accredited by NAAC with &apos;A+&apos; Grade
               </p> */}
-            </div>
+            {/* </div> */}
           </div>
         </div>
 
         {/* Right: Another Logo */}
-        <div className="flex-shrink-0">
+        {/* <div className="flex-shrink-0">
           <div className="w-16 h-16 rounded-lg flex items-center justify-center shadow-lg">
             <Image
               src="/images/interactionlogo.jpg"
@@ -72,7 +72,7 @@ function TopHeader() {
               className="object-contain w-24 h-24"
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
@@ -179,7 +179,7 @@ export default function Navbar() {
                     className="relative flex flex-col items-center justify-center"
                   >
                     <span className="text-2xl font-normal bg-gradient-to-r from-yellow-400 to-red-400 bg-clip-text text-transparent font-['Impact'] tracking-wider">
-                      Interaction
+                      YUVAAN
                     </span>
                     <span
                       className={`text-xs font-semibold ${
@@ -217,7 +217,7 @@ export default function Navbar() {
                 ))}
 
                 {/* Download Rule Book Button (Small) */}
-                <motion.div
+                {/* <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.5, duration: 0.3 }}
@@ -234,7 +234,7 @@ export default function Navbar() {
                     <Download size={12} />
                     <span className="hidden sm:inline">Rulebook</span>
                   </button>
-                </motion.div>
+                </motion.div> */}
 
                 {/* Register/Login Button */}
                 <motion.div

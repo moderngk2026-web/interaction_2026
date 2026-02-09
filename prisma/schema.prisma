@@ -13,8 +13,11 @@ model Admin {
   name      String
   email     String   @unique
   password  String
-  role      String   @default("admin") // "superadmin" or "admin"
+  role      String   @default("admin")
   createdAt DateTime @default(now())
+  
+  // Relations
+  registrations Registration[]
 }
 
 enum Role {
@@ -23,23 +26,30 @@ enum Role {
 }
 
 model Registration {
-  id                 Int       @id @default(autoincrement())
-  name               String
-  email              String
-  mobile             String
-  collegeId          String?
-  selectedEvents     Int[]
-  eventCodes         String?
-  eventNames         String?
-  graduationType  String?
-  eventDetails       Json?
-  totalAmount        Float
-  registrationToken  String    @unique
-  paymentReceipt     String
-  paymentVerified    Boolean   @default(false)
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
+  id                Int       @id @default(autoincrement())
+  name              String
+  email             String
+  mobile            String
+  collegeId         String?
+  graduationType    String?
   
-  // Add relationship to Admin
-  adminId   Int?
+  // Selected events with participation mode
+  selectedEvents    Json      // Array of { id, code, name, participationMode }
+  
+  // Team information (if any)
+  teamDetails       Json?     // { eventId: string, teamMembers: string[], teamSize: number }
+  
+  // Payment info
+  totalAmount       Float
+  registrationToken String    @unique
+  paymentReceipt    String
+  paymentVerified   Boolean   @default(false)
+  
+  // Timestamps
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  // Admin relation
+  adminId           Int?
+  admin             Admin?    @relation(fields: [adminId], references: [id])
 }

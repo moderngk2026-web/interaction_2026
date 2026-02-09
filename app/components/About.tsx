@@ -103,7 +103,7 @@ export default function AboutSectionWithImages() {
           <h2 className="text-6xl font-bold text-gray-800 mb-3 font-roman font-italic">
             About{" "}
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Interaction 2026
+              YUVAAN 2026
             </span>
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto text-sm">
@@ -243,8 +243,8 @@ export default function AboutSectionWithImages() {
 
               <div className="space-y-4">
                 <p className="text-gray-700 text-sm">
-                  <strong className="text-gray-800">Interaction 2026</strong> is
-                  our annual flagship event designed to bridge the gap between
+                  <strong className="text-gray-800">YUVAAN 2026</strong> is our
+                  annual flagship event designed to bridge the gap between
                   academic learning and real-world industry applications.
                 </p>
 
@@ -311,8 +311,8 @@ export default function AboutSectionWithImages() {
                         index % 3 === 0
                           ? "bg-blue-500"
                           : index % 3 === 1
-                          ? "bg-green-500"
-                          : "bg-purple-500"
+                            ? "bg-green-500"
+                            : "bg-purple-500"
                       }`}
                     ></div>
                     <span className="text-sm text-gray-700">{highlight}</span>

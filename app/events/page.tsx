@@ -13,53 +13,102 @@ interface Event {
 const sampleEvents: Event[] = [
   {
     id: 1,
-    title: "Mind Marathon (Quiz)",
+    title: "InsightCraft",
     description:
-      "Music, dance, and drama performances showcasing cultural heritage",
+      "Data Visualization Challenge (Individual/Team (Max 2) Fees:-Individual-100/ Team-200",
     date: "Jan 09, 2026",
   },
-
   {
     id: 2,
-    title: "Grab the oppurtunity",
-    description: "Showcase of student photography work",
+    title: "AI Music",
+    description:
+      "Create & Remix (Individual/Team (Max 2) Fees:-Individual-100/ Team-200",
     date: "Jan 09, 2026",
   },
   {
     id: 3,
-    title: "Web Craft Challenge",
-    description: "48-hour hackathon for social and environmental solutions",
+    title: "PromptStorm",
+    description:
+      "Talk Smart with AI (Only individual event.) Fees:-Individual-100",
     date: "Jan 09, 2026",
   },
   {
     id: 4,
-    title: "Spark the idea",
-    description: "Interactive session with industry leaders",
+    title: "Echoes of Itihasa",
+    description:
+      "Public Speaking  (Only individual event.) Fees:-Individual-100",
     date: "Jan 09, 2026",
   },
   {
     id: 5,
-    title: "Code Warriors",
+    title: "Yuktivaad",
     description:
-      "Coding competitions, tech talks, and workshops by industry experts",
+      "Debate (For / Against)Individual/ Team (2 Members) Fees:-Individual-100/ Team-200",
     date: "Jan 10, 2026",
   },
   {
     id: 6,
-    title: "SnapReel Contest",
-    description: "Athletics, cricket, football, and basketball tournaments",
+    title: "Yugantar",
+    description:
+      "Mythological Storytelling (Only Individual) Fees:-Individual-100",
     date: "Jan 10, 2026",
   },
   {
     id: 7,
-    title: "Gamer Strike",
-    description: "Hands-on workshop on AI and Machine Learning fundamentals",
+    title: "KavyaRas",
+    description: "Poetry Recitation (Only Individual) Fees:-Individual-100",
     date: "Jan 10, 2026",
   },
   {
     id: 8,
-    title: "Tech Debate",
-    description: "Pitch innovative ideas to investors and win seed funding",
+    title: "TechVision",
+    description: "Offline Poster Making (Only Individual) Fees:-Individual-100",
+    date: "Jan 10, 2026",
+  },
+  {
+    id: 9,
+    title: "Rangrekha",
+    description: "Mono Acting  (Only Individual) Fees:-Individual-100",
+    date: "Jan 10, 2026",
+  },
+  {
+    id: 10,
+    title: "LokDharohar",
+    description:
+      "Street Play (Nukkad Natak) Participants (8–15) Fees:- Team-200",
+    date: "Jan 10, 2026",
+  },
+  {
+    id: 11,
+    title: "Khoj – Hidden Hustle",
+    description: "TREASURE HUNT (3–4 Members) Fees:- Team-200",
+    date: "Jan 10, 2026",
+  },
+  {
+    id: 12,
+    title: "RANBHUMI.exe",
+    description: "BGMI Showdown (Squad 4 Players) Fees:- Team-200",
+    date: "Jan 10, 2026",
+  },
+  {
+    id: 13,
+    title: "Case Race",
+    description:
+      "The Ultimate Case Challenge (Team 2–4 Members) Fees:- Team-200",
+    date: "Jan 10, 2026",
+  },
+  {
+    id: 14,
+    title: "StockStorm",
+    description:
+      "Mock Stock Market Simulation (Individual / Team) Fees:-Individual-100/ Team-200",
+    date: "Jan 10, 2026",
+  },
+  {
+    id: 15,
+    title: "Between Lectures",
+    description:
+      "Short Film Showcase  (Solo / Team Max 4) Fees:-Individual-100/ Team-200",
     date: "Jan 10, 2026",
   },
 ];
@@ -73,7 +122,7 @@ export default function AlternatingEvents() {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 font-roman font-italic">
-            Interaction{" "}
+            YUVAAN{" "}
             <span className="bg-gradient-to-r from-yellow-400 to-pink-500 bg-clip-text text-transparent">
               Events
             </span>
@@ -128,24 +177,27 @@ export default function AlternatingEvents() {
                           isLeft ? "border-yellow-500/30" : "border-pink-500/30"
                         }
                         ${isLeft ? "md:text-left" : "md:text-right md:order-2"}
+                        min-w-[120px]
                       `}
                       >
                         <div className="text-2xl font-bold text-white">
                           {event.date.split(" ")[0]}
                         </div>
                         <div className="text-white/70">
-                          {event.date.split(" ")[1]}
+                          {event.date.split(" ").slice(1).join(" ")}
                         </div>
                       </div>
 
                       {/* Content */}
-                      <div className="flex-1">
+                      <div
+                        className={`flex-1 ${isLeft ? "" : "md:text-right"}`}
+                      >
                         <h3 className="text-2xl font-bold text-white mb-3">
                           {event.title}
                         </h3>
-                        {/* <p className="text-white/70 text-lg">
+                        <p className="text-white/70 text-lg">
                           {event.description}
-                        </p> */}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -159,8 +211,8 @@ export default function AlternatingEvents() {
         {/* <div className="text-center mt-20">
           <button className="px-12 py-4 bg-gradient-to-r from-yellow-500 to-pink-500 hover:from-yellow-600 hover:to-pink-600 text-white text-xl font-bold rounded-full hover:scale-105 transition-transform">
             Explore All Events
-          </button>
-        </div> */}
+          </button
+      </div>tton> */}
       </div>
     </div>
   );

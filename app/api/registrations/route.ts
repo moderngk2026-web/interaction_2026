@@ -1,20 +1,37 @@
 // app/api/registrations/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
-// Define event details structure
+// Define event details structure for the new system
 interface EventDetail {
   id: number;
   code: string;
   name: string;
-  price?: number;
+  description: string;
+  individualPrice: number;
+  teamPrice: number;
+  allowedModes: string[];
+  maxTeamSize?: number;
+  minTeamSize?: number;
+}
+
+// Define selected event structure from frontend
+interface SelectedEvent {
+  id: number;
+  participationMode: "individual" | "team";
+  teamMembers?: string[];
+  teamSize?: number;
 }
 
 //-------------------------------------
 // DEBUG HELPER
 //-------------------------------------
 function debug(label: string, value: any) {
-  console.log(`\n========== DEBUG: ${label} ==========\n`, value);
+  console.log(
+    `\n========== DEBUG: ${label} ==========\n`,
+    JSON.stringify(value, null, 2),
+  );
 }
 
 //-------------------------------------
@@ -80,17 +97,162 @@ async function generateRegistrationToken(eventCount: number): Promise<string> {
 }
 
 //-------------------------------------
-// EVENTS DATA (Should match frontend)
+// EVENTS DATA (Updated to match frontend exactly)
 //-------------------------------------
-const eventsData = [
-  { id: 1, code: "01", name: "Code Warriors", price: 100 },
-  { id: 2, code: "02", name: "Mind Marathon (Quiz)", price: 100 },
-  { id: 3, code: "03", name: "SnapReel Contest", price: 100 },
-  { id: 4, code: "04", name: "Gamer Strike", price: 100 },
-  { id: 5, code: "05", name: "Tech Debate", price: 100 },
-  { id: 6, code: "06", name: "Grab the oppurtunity", price: 100 },
-  { id: 7, code: "07", name: "Web Craft Challenge", price: 100 },
-  { id: 8, code: "08", name: "Spark the idea", price: 100 },
+const eventsData: EventDetail[] = [
+  {
+    id: 1,
+    code: "01",
+    name: "InsightCraft",
+    description: "Data Visualization Challenge",
+    individualPrice: 100,
+    teamPrice: 200,
+    allowedModes: ["individual", "team"],
+    minTeamSize: 2,
+    maxTeamSize: 2,
+  },
+  {
+    id: 2,
+    code: "02",
+    name: "AI Music",
+    description: "Create & Remix",
+    individualPrice: 100,
+    teamPrice: 200,
+    allowedModes: ["individual", "team"],
+    minTeamSize: 2,
+    maxTeamSize: 2,
+  },
+  {
+    id: 3,
+    code: "03",
+    name: "PromptStorm",
+    description: "Talk Smart with AI",
+    individualPrice: 100,
+    teamPrice: 0,
+    allowedModes: ["individual"],
+  },
+  {
+    id: 4,
+    code: "04",
+    name: "Echoes of Itihasa",
+    description: "Public Speaking",
+    individualPrice: 100,
+    teamPrice: 0,
+    allowedModes: ["individual"],
+  },
+  {
+    id: 5,
+    code: "05",
+    name: "Yuktivaad",
+    description: "Debate (For / Against)",
+    individualPrice: 100,
+    teamPrice: 200,
+    allowedModes: ["individual", "team"],
+    minTeamSize: 2,
+    maxTeamSize: 2,
+  },
+  {
+    id: 6,
+    code: "06",
+    name: "Yugantar",
+    description: "Mythological Storytelling",
+    individualPrice: 100,
+    teamPrice: 0,
+    allowedModes: ["individual"],
+  },
+  {
+    id: 7,
+    code: "07",
+    name: "KavyaRas",
+    description: "Poetry Recitation",
+    individualPrice: 100,
+    teamPrice: 0,
+    allowedModes: ["individual"],
+  },
+  {
+    id: 8,
+    code: "08",
+    name: "TechVision",
+    description: "Offline Poster Making",
+    individualPrice: 100,
+    teamPrice: 0,
+    allowedModes: ["individual"],
+  },
+  {
+    id: 9,
+    code: "09",
+    name: "Rangrekha",
+    description: "Mono Acting",
+    individualPrice: 100,
+    teamPrice: 0,
+    allowedModes: ["individual"],
+  },
+  {
+    id: 10,
+    code: "10",
+    name: "LokDharohar",
+    description: "Street Play (Nukkad Natak)",
+    individualPrice: 0,
+    teamPrice: 200,
+    allowedModes: ["team"],
+    minTeamSize: 8,
+    maxTeamSize: 15,
+  },
+  {
+    id: 11,
+    code: "11",
+    name: "Khoj – Hidden Hustle",
+    description: "TREASURE HUNT",
+    individualPrice: 0,
+    teamPrice: 200,
+    allowedModes: ["team"],
+    minTeamSize: 3,
+    maxTeamSize: 4,
+  },
+  {
+    id: 12,
+    code: "12",
+    name: "RANBHUMI.exe",
+    description: "BGMI Showdown",
+    individualPrice: 0,
+    teamPrice: 200,
+    allowedModes: ["team"],
+    minTeamSize: 4,
+    maxTeamSize: 4,
+  },
+  {
+    id: 13,
+    code: "13",
+    name: "Case Race",
+    description: "The Ultimate Case Challenge",
+    individualPrice: 0,
+    teamPrice: 200,
+    allowedModes: ["team"],
+    minTeamSize: 2,
+    maxTeamSize: 4,
+  },
+  {
+    id: 14,
+    code: "14",
+    name: "StockStorm",
+    description: "Mock Stock Market Simulation",
+    individualPrice: 100,
+    teamPrice: 200,
+    allowedModes: ["individual", "team"],
+    minTeamSize: 2,
+    maxTeamSize: 4,
+  },
+  {
+    id: 15,
+    code: "15",
+    name: "Between Lectures",
+    description: "Short Film Showcase",
+    individualPrice: 100,
+    teamPrice: 200,
+    allowedModes: ["individual", "team"],
+    minTeamSize: 2,
+    maxTeamSize: 4,
+  },
 ];
 
 export async function GET(request: NextRequest) {
@@ -146,9 +308,7 @@ export async function GET(request: NextRequest) {
         collegeId: true,
         graduationType: true,
         selectedEvents: true,
-        eventCodes: true,
-        eventNames: true,
-        eventDetails: true,
+        teamDetails: true,
         totalAmount: true,
         registrationToken: true,
         paymentVerified: true,
@@ -158,11 +318,14 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    // Parse event details JSON
+    // Parse JSON fields
     const registrationsWithParsedDetails = registrations.map((reg) => ({
       ...reg,
-      eventDetails: reg.eventDetails
-        ? JSON.parse(reg.eventDetails as string)
+      selectedEvents: reg.selectedEvents
+        ? JSON.parse(reg.selectedEvents as string)
+        : [],
+      teamDetails: reg.teamDetails
+        ? JSON.parse(reg.teamDetails as string)
         : null,
       createdAt: reg.createdAt.toISOString(),
       updatedAt: reg.updatedAt.toISOString(),
@@ -186,13 +349,13 @@ export async function GET(request: NextRequest) {
         message: "Failed to fetch registrations",
         error: error.message,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 //-------------------------------------
-// POST API ROUTE (FIXED)
+// POST API ROUTE (UPDATED FOR NEW FORMAT)
 //-------------------------------------
 export async function POST(request: NextRequest) {
   console.log("\n=========== NEW REGISTRATION REQUEST ===========");
@@ -202,13 +365,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     debug("Incoming Body", body);
 
-    // REMOVE registrationToken from body if it exists
-    const { registrationToken: frontendToken, ...cleanBody } = body;
-    if (frontendToken) {
-      console.log(`⚠️ Frontend sent token: ${frontendToken} (will be ignored)`);
-    }
-
-    // Validate required fields (REMOVED registrationToken)
+    // Validate required fields
     const requiredFields = [
       "name",
       "email",
@@ -220,101 +377,165 @@ export async function POST(request: NextRequest) {
     ];
 
     for (const field of requiredFields) {
-      if (!cleanBody[field]) {
+      if (!body[field]) {
         debug("Missing Field", field);
         return NextResponse.json(
           { message: `${field} is required` },
-          { status: 400 }
+          { status: 400 },
         );
       }
     }
 
-    // REMOVED THE EMAIL DUPLICATE CHECK
-    // ---------------------------------
-    // No longer checking: const existingRegistration = await prisma.registration.findFirst(...)
-    // No longer returning 409 error for duplicate emails
-    // ---------------------------------
+    // Validate selectedEvents is an array
+    if (
+      !Array.isArray(body.selectedEvents) ||
+      body.selectedEvents.length === 0
+    ) {
+      return NextResponse.json(
+        { message: "Please select at least one event" },
+        { status: 400 },
+      );
+    }
 
-    // PROCESS SELECTED EVENTS (same as before)
-    debug("Raw selectedEvents from frontend", body.selectedEvents);
+    // Parse selected events
+    const selectedEvents: SelectedEvent[] = body.selectedEvents;
+    debug("Parsed Selected Events", selectedEvents);
 
-    let selectedEventIds: number[] = [];
-    let selectedEventDetails: EventDetail[] = [];
+    // Process selected events and validate
+    const processedEvents = selectedEvents.map((selection) => {
+      const event = eventsData.find((e) => e.id === selection.id);
+      if (!event) {
+        throw new Error(`Event with ID ${selection.id} not found`);
+      }
 
-    if (Array.isArray(body.selectedEvents)) {
-      if (
-        body.selectedEvents.length > 0 &&
-        typeof body.selectedEvents[0] === "object"
-      ) {
-        selectedEventIds = body.selectedEvents.map((event: any) =>
-          typeof event === "object" && event.id
-            ? Number(event.id)
-            : Number(event)
-        );
+      // Create event object
+      const eventObj = {
+        id: event.id,
+        code: event.code,
+        name: event.name,
+        description: event.description,
+        participationMode: selection.participationMode,
+        individualPrice: event.individualPrice,
+        teamPrice: event.teamPrice,
+        actualAmount:
+          selection.participationMode === "individual"
+            ? event.individualPrice
+            : event.teamPrice,
+      };
 
-        selectedEventDetails = selectedEventIds
-          .map((eventId) => {
-            const event = eventsData.find((e) => e.id === eventId);
-            return event
-              ? {
-                  id: event.id,
-                  code: event.code,
-                  name: event.name,
-                  price: event.price,
-                }
-              : null;
-          })
-          .filter(Boolean) as EventDetail[];
-      } else {
-        selectedEventIds = body.selectedEvents.map((id: any) => Number(id));
+      // Add team details if team event
+      if (selection.participationMode === "team") {
+        return {
+          ...eventObj,
+          teamMembers: selection.teamMembers || [],
+          teamSize: selection.teamSize || 0,
+        };
+      }
 
-        selectedEventDetails = selectedEventIds
-          .map((eventId) => {
-            const event = eventsData.find((e) => e.id === eventId);
-            return event
-              ? {
-                  id: event.id,
-                  code: event.code,
-                  name: event.name,
-                  price: event.price,
-                }
-              : null;
-          })
-          .filter(Boolean) as EventDetail[];
+      return eventObj;
+    });
+
+    debug("Processed Events", processedEvents);
+
+    // Validation
+    for (const event of processedEvents) {
+      const originalEvent = eventsData.find((e) => e.id === event.id);
+      if (!originalEvent) continue;
+
+      if (event.participationMode === "team") {
+        // Check if team mode is allowed
+        if (!originalEvent.allowedModes.includes("team")) {
+          return NextResponse.json(
+            { message: `${event.name} does not allow team participation` },
+            { status: 400 },
+          );
+        }
+
+        // Validate team size
+        if ((event as any).teamSize < (originalEvent.minTeamSize || 2)) {
+          return NextResponse.json(
+            {
+              message: `${event.name} requires at least ${originalEvent.minTeamSize} team members`,
+            },
+            { status: 400 },
+          );
+        }
+
+        if (
+          originalEvent.maxTeamSize &&
+          (event as any).teamSize > originalEvent.maxTeamSize
+        ) {
+          return NextResponse.json(
+            {
+              message: `${event.name} allows maximum ${originalEvent.maxTeamSize} team members`,
+            },
+            { status: 400 },
+          );
+        }
+
+        // Validate team member names
+        const teamMembers = (event as any).teamMembers || [];
+        if (teamMembers.length !== (event as any).teamSize) {
+          return NextResponse.json(
+            {
+              message: `Please provide all team member names for ${event.name}`,
+            },
+            { status: 400 },
+          );
+        }
+
+        const emptyNames = teamMembers.filter((name: string) => !name.trim());
+        if (emptyNames.length > 0) {
+          return NextResponse.json(
+            { message: `Please fill all team member names for ${event.name}` },
+            { status: 400 },
+          );
+        }
+      } else if (event.participationMode === "individual") {
+        // Check if individual mode is allowed
+        if (!originalEvent.allowedModes.includes("individual")) {
+          return NextResponse.json(
+            {
+              message: `${event.name} does not allow individual participation`,
+            },
+            { status: 400 },
+          );
+        }
       }
     }
 
-    debug("Extracted Event IDs", selectedEventIds);
-    debug("Event Details", selectedEventDetails);
+    // Calculate total amount from processed events
+    const calculatedTotalAmount = processedEvents.reduce(
+      (total, event) => total + event.actualAmount,
+      0,
+    );
 
-    // Prepare event codes and names for separate fields
-    const eventCodes = selectedEventDetails.map((e) => e.code).join(",");
-    const eventNames = selectedEventDetails.map((e) => e.name).join(",");
+    // Verify calculated amount matches submitted amount
+    if (Math.abs(calculatedTotalAmount - body.totalAmount) > 1) {
+      console.warn(
+        `Amount mismatch: calculated ${calculatedTotalAmount}, submitted ${body.totalAmount}`,
+      );
+    }
 
-    // Prepare full event details JSON
-    const eventDetailsJson = {
-      eventIds: selectedEventIds,
-      eventCodes: selectedEventDetails.map((e) => e.code),
-      eventNames: selectedEventDetails.map((e) => e.name),
-      eventDetails: selectedEventDetails,
-      count: selectedEventIds.length,
-      totalAmount: body.totalAmount,
-    };
+    // Prepare team details for storage
+    const teamDetails = processedEvents
+      .filter((event) => event.participationMode === "team")
+      .map((event) => ({
+        eventId: event.id,
+        eventName: event.name,
+        teamSize: (event as any).teamSize,
+        teamMembers: (event as any).teamMembers || [],
+      }));
 
-    debug("Event Codes String", eventCodes);
-    debug("Event Names String", eventNames);
-    debug("Event Details JSON", eventDetailsJson);
+    debug("Team Details", teamDetails);
 
     // Generate registration token
-    const eventCount = selectedEventIds.length;
+    const eventCount = processedEvents.length;
     const registrationToken = await generateRegistrationToken(eventCount);
 
     debug("Generated Token", registrationToken);
 
-    // Process payment receipt
-    const receiptData = cleanBody.paymentReceipt;
-
-    // Check if generated token already exists
+    // Check if token already exists
     const existingToken = await prisma.registration.findUnique({
       where: { registrationToken },
     });
@@ -327,31 +548,42 @@ export async function POST(request: NextRequest) {
     }
 
     debug("Creating registration with:", {
-      selectedEvents: selectedEventIds,
-      eventCodes,
-      eventNames,
-      eventDetails: eventDetailsJson,
-      token: registrationToken,
+      selectedEvents: processedEvents.length,
+      teamEvents: teamDetails.length,
+      totalAmount: calculatedTotalAmount,
     });
 
-    // CREATE RECORD
+    // CREATE RECORD - Note: removed eventCodes and eventNames since they're not in your schema
     const registration = await prisma.registration.create({
       data: {
-        name: cleanBody.name,
-        email: cleanBody.email,
-        mobile: cleanBody.mobile,
-        collegeId: cleanBody.collegeId || null,
-        graduationType: cleanBody.graduationType,
-        selectedEvents: { set: selectedEventIds },
-        eventCodes: eventCodes,
-        eventNames: eventNames,
-        eventDetails: JSON.stringify(eventDetailsJson),
-        totalAmount: cleanBody.totalAmount,
-        registrationToken, // Use ONLY the generated token
-        paymentReceipt: receiptData,
+        name: body.name,
+        email: body.email,
+        mobile: body.mobile,
+        collegeId: body.collegeId || null,
+        graduationType: body.graduationType,
+        selectedEvents: JSON.stringify(processedEvents), // Store as JSON string
+        teamDetails:
+          teamDetails.length > 0
+            ? JSON.stringify(teamDetails)
+            : Prisma.JsonNull,
+        totalAmount: calculatedTotalAmount,
+        registrationToken: registrationToken,
+        paymentReceipt: body.paymentReceipt,
         paymentVerified: false,
       },
     });
+
+    // Prepare response data
+    const responseData = {
+      id: registration.id,
+      name: registration.name,
+      email: registration.email,
+      token: registration.registrationToken,
+      eventsCount: eventCount,
+      totalAmount: registration.totalAmount,
+      selectedEvents: processedEvents,
+      teamEvents: teamDetails,
+    };
 
     // SUCCESS RESPONSE
     return NextResponse.json(
@@ -359,33 +591,36 @@ export async function POST(request: NextRequest) {
         success: true,
         message: "Registration successful",
         registrationToken: registration.registrationToken,
-        data: {
-          id: registration.id,
-          name: registration.name,
-          email: registration.email,
-          token: registration.registrationToken,
-          eventsCount: eventCount,
-          totalAmount: registration.totalAmount,
-          eventCodes: selectedEventDetails.map((e) => e.code),
-          eventNames: selectedEventDetails.map((e) => e.name),
-          eventDetails: selectedEventDetails,
-        },
+        data: responseData,
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error: any) {
     console.error("\n=========== ERROR ===========");
     console.error("Error message:", error.message);
     console.error("Error code:", error.code);
+    console.error("Stack trace:", error.stack);
 
-    // REMOVED P2002 (unique constraint) error handling
-
-    if (error.code === "P1001") {
+    // Handle specific Prisma errors
+    if (error.code === "P1001" || error.code === "P1002") {
       return NextResponse.json(
         {
-          message: "Database connection failed",
+          message: "Database connection failed. Please try again later.",
+          error: error.message,
         },
-        { status: 500 }
+        { status: 500 },
+      );
+    }
+
+    if (error.code === "P2002") {
+      // Unique constraint violation (email or token)
+      const field = error.meta?.target?.[0] || "unknown field";
+      return NextResponse.json(
+        {
+          message: `Registration with this ${field} already exists.`,
+          error: error.message,
+        },
+        { status: 409 },
       );
     }
 
@@ -395,7 +630,7 @@ export async function POST(request: NextRequest) {
         error: error.message,
         details: "Please check your input and try again.",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

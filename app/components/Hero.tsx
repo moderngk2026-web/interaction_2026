@@ -36,7 +36,7 @@ export default function Hero() {
         setTimeLeft({
           days: Math.floor(distance / (1000 * 60 * 60 * 24)),
           hours: Math.floor(
-            (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+            (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
           ),
           minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
           seconds: Math.floor((distance % (1000 * 60)) / 1000),
@@ -155,7 +155,7 @@ export default function Hero() {
           className="text-center"
         >
           {/* Event Badge */}
-          <motion.div
+          {/* <motion.div
             variants={itemVariants}
             className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-pink-500/20 to-purple-500/20 backdrop-blur-sm rounded-full border border-white/10 mb-8"
           >
@@ -163,7 +163,7 @@ export default function Hero() {
             <span className="text-sm font-semibold text-white/90">
               25 Years of Excellence (Silver Jubilee)
             </span>
-          </motion.div>
+          </motion.div> */}
 
           {/* Main Title */}
           <motion.h1
@@ -171,7 +171,7 @@ export default function Hero() {
             className="text-5xl md:text-8xl lg:text-9xl font-semibold mb-6 font-italic font-roman"
           >
             <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent">
-              INTERACTION
+              YUVAAN
             </span>
           </motion.h1>
 
@@ -193,7 +193,7 @@ export default function Hero() {
               {
                 icon: Calendar,
                 label: "Date",
-                value: "Jan 09-10, 2026",
+                value: "Fev 26-27, 2026",
                 color: "text-yellow-400",
               },
             ].map((item, index) => (
@@ -226,7 +226,7 @@ export default function Hero() {
             </Link>
 
             {/* Download Rule Book Button */}
-            <motion.button
+            {/* <motion.button
               onClick={handleDownloadRuleBook}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -234,7 +234,7 @@ export default function Hero() {
             >
               <Download className="w-5 h-5" />
               Download Rule Book
-            </motion.button>
+            </motion.button> */}
           </motion.div>
         </motion.div>
       </div>

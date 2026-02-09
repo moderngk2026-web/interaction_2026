@@ -15,110 +15,242 @@ import {
   X,
   Loader2,
   Copy,
+  UserCircle,
+  Users,
+  Plus,
+  Minus,
 } from "lucide-react";
 import { QRCodeCanvas } from "qrcode.react";
 import Dropzone from "react-dropzone";
 
 interface Event {
   id: number;
-  code: string; // Event code like 01, 02, etc.
+  code: string;
   name: string;
-  price: number;
   description: string;
-  maxParticipants: number;
-  currentParticipants: number;
+  // Pricing information
+  individualPrice: number;
+  teamPrice: number;
+  // Participation modes
+  allowedModes: ("individual" | "team")[];
+  maxTeamSize?: number;
+  minTeamSize?: number;
+  // Team-specific info
+  maxTeams?: number;
+  currentTeams?: number;
+  // Individual-specific info
+  maxIndividuals?: number;
+  currentIndividuals?: number;
 }
 
 const events: Event[] = [
   {
     id: 1,
     code: "01",
-    name: "Code Warriors",
-    price: 100,
-    description: "Coding competitions",
-    maxParticipants: 300,
-    currentParticipants: 245,
+    name: "InsightCraft",
+    description: "Data Visualization Challenge",
+    individualPrice: 100,
+    teamPrice: 200,
+    allowedModes: ["individual", "team"],
+    minTeamSize: 2,
+    maxTeamSize: 2,
+    maxTeams: 50,
+    currentTeams: 15,
+    maxIndividuals: 100,
+    currentIndividuals: 45,
   },
   {
     id: 2,
     code: "02",
-    name: "Mind Marathon (Quiz)",
-    price: 100,
-    description: "Mind Marathon (Quiz)",
-    maxParticipants: 500,
-    currentParticipants: 320,
+    name: "AI Music",
+    description: "Create & Remix",
+    individualPrice: 100,
+    teamPrice: 200,
+    allowedModes: ["individual", "team"],
+    minTeamSize: 2,
+    maxTeamSize: 2,
+    maxTeams: 40,
+    currentTeams: 22,
+    maxIndividuals: 80,
+    currentIndividuals: 38,
   },
   {
     id: 3,
     code: "03",
-    name: "SnapReel Contest",
-    price: 100,
-    description: "SnapReel Contest",
-    maxParticipants: 200,
-    currentParticipants: 180,
+    name: "PromptStorm",
+    description: "Talk Smart with AI",
+    individualPrice: 100,
+    teamPrice: 0,
+    allowedModes: ["individual"],
+    maxIndividuals: 150,
+    currentIndividuals: 89,
   },
-  // {
-  //   id: 4,
-  //   code: "04",
-  //   name: "Gamer Strike",
-  //   price: 100,
-  //   description: "Gamer Strike",
-  //   maxParticipants: 100,
-  //   currentParticipants: 45,
-  // },s
+  {
+    id: 4,
+    code: "04",
+    name: "Echoes of Itihasa",
+    description: "Public Speaking",
+    individualPrice: 100,
+    teamPrice: 0,
+    allowedModes: ["individual"],
+    maxIndividuals: 100,
+    currentIndividuals: 67,
+  },
   {
     id: 5,
     code: "05",
-    name: "Tech Debate",
-    price: 100,
-    description: "Tech Debate",
-    maxParticipants: 100,
-    currentParticipants: 85,
+    name: "Yuktivaad",
+    description: "Debate (For / Against)",
+    individualPrice: 100,
+    teamPrice: 200,
+    allowedModes: ["individual", "team"],
+    minTeamSize: 2,
+    maxTeamSize: 2,
+    maxTeams: 30,
+    currentTeams: 18,
+    maxIndividuals: 60,
+    currentIndividuals: 42,
   },
   {
     id: 6,
     code: "06",
-    name: "Grab the oppurtunity",
-    price: 100,
-    description: "Grab the oppurtunity",
-    maxParticipants: 150,
-    currentParticipants: 120,
+    name: "Yugantar",
+    description: "Mythological Storytelling",
+    individualPrice: 100,
+    teamPrice: 0,
+    allowedModes: ["individual"],
+    maxIndividuals: 80,
+    currentIndividuals: 55,
   },
   {
     id: 7,
     code: "07",
-    name: "Web Craft Challenge",
-    price: 100,
-    description: "Web Craft Challenge",
-    maxParticipants: 150,
-    currentParticipants: 120,
+    name: "KavyaRas",
+    description: "Poetry Recitation",
+    individualPrice: 100,
+    teamPrice: 0,
+    allowedModes: ["individual"],
+    maxIndividuals: 120,
+    currentIndividuals: 78,
   },
   {
     id: 8,
     code: "08",
-    name: "Spark the idea",
-    price: 100,
-    description: "Spark the idea",
-    maxParticipants: 150,
-    currentParticipants: 120,
+    name: "TechVision",
+    description: "Offline Poster Making",
+    individualPrice: 100,
+    teamPrice: 0,
+    allowedModes: ["individual"],
+    maxIndividuals: 90,
+    currentIndividuals: 65,
+  },
+  {
+    id: 9,
+    code: "09",
+    name: "Rangrekha",
+    description: "Mono Acting",
+    individualPrice: 100,
+    teamPrice: 0,
+    allowedModes: ["individual"],
+    maxIndividuals: 70,
+    currentIndividuals: 48,
+  },
+  {
+    id: 10,
+    code: "10",
+    name: "LokDharohar",
+    description: "Street Play (Nukkad Natak)",
+    individualPrice: 0,
+    teamPrice: 200,
+    allowedModes: ["team"],
+    minTeamSize: 8,
+    maxTeamSize: 15,
+    maxTeams: 20,
+    currentTeams: 12,
+  },
+  {
+    id: 11,
+    code: "11",
+    name: "Khoj – Hidden Hustle",
+    description: "TREASURE HUNT",
+    individualPrice: 0,
+    teamPrice: 200,
+    allowedModes: ["team"],
+    minTeamSize: 3,
+    maxTeamSize: 4,
+    maxTeams: 25,
+    currentTeams: 16,
+  },
+  {
+    id: 12,
+    code: "12",
+    name: "RANBHUMI.exe",
+    description: "BGMI Showdown",
+    individualPrice: 0,
+    teamPrice: 200,
+    allowedModes: ["team"],
+    minTeamSize: 4,
+    maxTeamSize: 4,
+    maxTeams: 30,
+    currentTeams: 22,
+  },
+  {
+    id: 13,
+    code: "13",
+    name: "Case Race",
+    description: "The Ultimate Case Challenge",
+    individualPrice: 0,
+    teamPrice: 200,
+    allowedModes: ["team"],
+    minTeamSize: 2,
+    maxTeamSize: 4,
+    maxTeams: 35,
+    currentTeams: 25,
+  },
+  {
+    id: 14,
+    code: "14",
+    name: "StockStorm",
+    description: "Mock Stock Market Simulation",
+    individualPrice: 100,
+    teamPrice: 200,
+    allowedModes: ["individual", "team"],
+    minTeamSize: 2,
+    maxTeamSize: 4,
+    maxTeams: 40,
+    currentTeams: 28,
+    maxIndividuals: 80,
+    currentIndividuals: 52,
+  },
+  {
+    id: 15,
+    code: "15",
+    name: "Between Lectures",
+    description: "Short Film Showcase",
+    individualPrice: 100,
+    teamPrice: 200,
+    allowedModes: ["individual", "team"],
+    minTeamSize: 2,
+    maxTeamSize: 4,
+    maxTeams: 25,
+    currentTeams: 18,
+    maxIndividuals: 50,
+    currentIndividuals: 32,
   },
 ];
 
-// Mock function to get next participant number - In production, this would be from DB
+// Mock function to get next participant number
 const getNextParticipantNumber = async (
-  eventCount: number
+  eventCount: number,
 ): Promise<number> => {
-  // This is a mock. In real app, you'd query the database to get the count
-  // of registrations with the same event count for the current year
   const mockCounts: Record<number, number> = {
-    1: 25, // Already have 25 participants with 1 event
-    2: 18, // 18 participants with 2 events
-    3: 12, // 12 participants with 3 events
-    4: 8, // 8 participants with 4 events
-    5: 5, // 5 participants with 5 events
-    6: 3, // 3 participants with all 6 events
+    1: 25,
+    2: 18,
+    3: 12,
+    4: 8,
+    5: 5,
+    6: 3,
   };
-
   return (mockCounts[eventCount] || 0) + 1;
 };
 
@@ -127,24 +259,24 @@ const generateRegistrationToken = (
   collegeCode: string,
   year: string,
   eventCount: number,
-  participantNumber: number
+  participantNumber: number,
 ): string => {
   const eventCountStr = eventCount.toString().padStart(2, "0");
   const participantNumberStr = participantNumber.toString().padStart(3, "0");
-
   return `${collegeCode}${year}${eventCountStr}${participantNumberStr}`;
 };
 
-// Update the RegistrationFormData interface
 interface RegistrationFormData {
   name: string;
   email: string;
   mobile: string;
   collegeId: string;
+  graduationType: string;
   selectedEvents: {
     id: number;
-    code: string;
-    name: string;
+    participationMode: "individual" | "team";
+    teamMembers?: string[];
+    teamSize?: number;
   }[];
   totalAmount: number;
   registrationToken: string;
@@ -160,7 +292,14 @@ export default function RegistrationForm() {
     graduationType: "",
   });
 
-  const [selectedEvents, setSelectedEvents] = useState<number[]>([]);
+  const [selectedEvents, setSelectedEvents] = useState<
+    {
+      id: number;
+      participationMode: "individual" | "team";
+      teamMembers?: string[];
+      teamSize?: number;
+    }[]
+  >([]);
   const [submitted, setSubmitted] = useState(false);
   const [registrationToken, setRegistrationToken] = useState("");
   const [totalAmount, setTotalAmount] = useState(0);
@@ -171,8 +310,101 @@ export default function RegistrationForm() {
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [teamDetails, setTeamDetails] = useState<Record<number, string[]>>({});
 
-  // Generate registration token based on selected events
+  // Initialize team members for team events
+  const initializeTeamMembers = (eventId: number, minSize: number) => {
+    const event = events.find((e) => e.id === eventId);
+    if (!event) return;
+
+    const baseTeamMembers = Array(minSize).fill("");
+    if (event.id === 10) {
+      // LokDharohar - start with 8 members
+      baseTeamMembers.push(...Array(7).fill(""));
+    }
+    setTeamDetails((prev) => ({
+      ...prev,
+      [eventId]: [...baseTeamMembers],
+    }));
+  };
+
+  // Update team member
+  const updateTeamMember = (eventId: number, index: number, value: string) => {
+    setTeamDetails((prev) => ({
+      ...prev,
+      [eventId]: prev[eventId].map((member, i) =>
+        i === index ? value : member,
+      ),
+    }));
+  };
+
+  // Add team member
+  const addTeamMember = (eventId: number) => {
+    const event = events.find((e) => e.id === eventId);
+    if (!event) return;
+
+    if (teamDetails[eventId].length < (event.maxTeamSize || 4)) {
+      setTeamDetails((prev) => ({
+        ...prev,
+        [eventId]: [...prev[eventId], ""],
+      }));
+    }
+  };
+
+  // Remove team member
+  const removeTeamMember = (eventId: number, index: number) => {
+    const event = events.find((e) => e.id === eventId);
+    if (!event) return;
+
+    if (teamDetails[eventId].length > (event.minTeamSize || 2)) {
+      setTeamDetails((prev) => ({
+        ...prev,
+        [eventId]: prev[eventId].filter((_, i) => i !== index),
+      }));
+    }
+  };
+
+  // Toggle event selection
+  const handleEventToggle = (eventId: number, mode: "individual" | "team") => {
+    const event = events.find((e) => e.id === eventId);
+    if (!event) return;
+
+    setSelectedEvents((prev) => {
+      // Remove if already selected
+      const filtered = prev.filter((item) => item.id !== eventId);
+
+      // Add with new mode
+      const newSelection = {
+        id: eventId,
+        participationMode: mode,
+        teamSize:
+          mode === "team"
+            ? teamDetails[eventId]?.length || event.minTeamSize || 2
+            : undefined,
+        teamMembers: mode === "team" ? teamDetails[eventId] : undefined,
+      };
+
+      return [...filtered, newSelection];
+    });
+  };
+
+  // Calculate total amount
+  useEffect(() => {
+    let amount = 0;
+    selectedEvents.forEach((selection) => {
+      const event = events.find((e) => e.id === selection.id);
+      if (event) {
+        if (selection.participationMode === "individual") {
+          amount += event.individualPrice;
+        } else {
+          amount += event.teamPrice;
+        }
+      }
+    });
+    setTotalAmount(amount);
+  }, [selectedEvents]);
+
+  // Generate token based on selected events
   const generateToken = useCallback(async () => {
     if (selectedEvents.length === 0) return;
 
@@ -189,23 +421,19 @@ export default function RegistrationForm() {
         collegeCode,
         year,
         eventCount,
-        participantNumber
+        participantNumber,
       );
       setRegistrationToken(token);
     } catch (error) {
       console.error("Error generating token:", error);
-      // Fallback to simple token
       const timestamp = Date.now();
       const random = Math.floor(Math.random() * 1000);
       setRegistrationToken(`REG-${timestamp}-${random}`);
     }
   }, [selectedEvents]);
 
-  // Calculate total amount and update token whenever selected events change
+  // Generate token when events change
   useEffect(() => {
-    const amount = selectedEvents.length * 100;
-    setTotalAmount(amount);
-
     if (selectedEvents.length > 0) {
       generateToken();
     } else {
@@ -213,19 +441,7 @@ export default function RegistrationForm() {
     }
   }, [selectedEvents, generateToken]);
 
-  const handleEventToggle = (eventId: number) => {
-    setSelectedEvents((prev) => {
-      if (prev.includes(eventId)) {
-        return prev.filter((id) => id !== eventId);
-      } else {
-        if (prev.length < 8) {
-          return [...prev, eventId];
-        }
-        return prev;
-      }
-    });
-  };
-
+  // Handle file drop for payment receipt
   const handleDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (file) {
@@ -268,48 +484,14 @@ export default function RegistrationForm() {
     setReceiptPreview(null);
   };
 
-  // Copy token to clipboard
-  const copyTokenToClipboard = () => {
-    navigator.clipboard.writeText(registrationToken);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  // Test component to check Cloudinary config
-  function CloudinaryTest() {
-    const [config, setConfig] = useState<any>(null);
-
-    useEffect(() => {
-      setConfig({
-        cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-        uploadPreset: process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET,
-        apiKey: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
-      });
-    }, []);
-
-    return (
-      <div className="p-4 bg-red-50">
-        <h3>Cloudinary Config Test:</h3>
-        <pre>{JSON.stringify(config, null, 2)}</pre>
-      </div>
-    );
-  }
-
-  // Upload to Cloudinary with low quality settings
-  // Updated uploadToCloudinary function
+  // Upload to Cloudinary
   const uploadToCloudinary = async (file: File): Promise<string> => {
     try {
-      // Log environment variables (remove in production)
-      console.log("Cloudinary Config:", {
-        cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-        uploadPreset: process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET,
-      });
-
       const formData = new FormData();
       formData.append("file", file);
       formData.append(
         "upload_preset",
-        process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || ""
+        process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "",
       );
 
       // Add optimization parameters
@@ -321,19 +503,13 @@ export default function RegistrationForm() {
         {
           method: "POST",
           body: formData,
-        }
+        },
       );
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error("Cloudinary Upload Failed:", {
-          status: response.status,
-          statusText: response.statusText,
-          error: errorText,
-        });
-        throw new Error(
-          `Upload failed: ${response.status} ${response.statusText}`
-        );
+        console.error("Cloudinary Upload Failed:", errorText);
+        throw new Error(`Upload failed: ${response.status}`);
       }
 
       const data = await response.json();
@@ -348,20 +524,15 @@ export default function RegistrationForm() {
   const submitRegistration = async (receiptUrl: string) => {
     setLoading(true);
     try {
-      // Prepare selected events data
-      const selectedEventDetails = selectedEvents.map((id) => {
-        const event = events.find((e) => e.id === id);
-        return {
-          id: event?.id || id,
-          code: event?.code || "",
-          name: event?.name || "",
-        };
-      });
-
-      // IMPORTANT: Send event IDs (numbers), not objects for selectedEvents
+      // Prepare registration data
       const registrationData = {
         ...formData,
-        selectedEvents: selectedEvents, // Just the array of IDs: [1, 2, 3]
+        selectedEvents: selectedEvents.map((selection) => ({
+          id: selection.id,
+          participationMode: selection.participationMode,
+          teamMembers: selection.teamMembers,
+          teamSize: selection.teamSize,
+        })),
         totalAmount,
         registrationToken,
         paymentReceipt: receiptUrl,
@@ -380,14 +551,13 @@ export default function RegistrationForm() {
       const responseData = await response.json();
 
       if (!response.ok) {
-        // Handle specific error statuses
         if (response.status === 409) {
           throw new Error(
-            "Email already registered. Please use a different email or check your previous registration."
+            "Email already registered. Please use a different email or check your previous registration.",
           );
         } else if (response.status === 400) {
           throw new Error(
-            responseData.message || "Please check all required fields."
+            responseData.message || "Please check all required fields.",
           );
         } else {
           throw new Error(responseData.message || "Registration failed");
@@ -406,10 +576,9 @@ export default function RegistrationForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // ⛔ Prevent multiple submissions
+    // Prevent multiple submissions
     if (isSubmitting) return;
-
-    setIsSubmitting(true); // 🔒 LOCK IMMEDIATELY
+    setIsSubmitting(true);
 
     // Validation
     if (selectedEvents.length === 0) {
@@ -436,22 +605,43 @@ export default function RegistrationForm() {
       return;
     }
 
+    // Validate team member names for team events
+    for (const selection of selectedEvents) {
+      if (selection.participationMode === "team" && selection.teamMembers) {
+        const emptyNames = selection.teamMembers.filter(
+          (name) => name.trim() === "",
+        );
+        if (emptyNames.length > 0) {
+          setError(
+            `Please fill all team member names for ${events.find((e) => e.id === selection.id)?.name}`,
+          );
+          setIsSubmitting(false);
+          return;
+        }
+      }
+    }
+
     setError("");
 
     try {
+      setUploading(true);
       const receiptUrl = await uploadToCloudinary(paymentReceipt);
       await submitRegistration(receiptUrl);
     } catch (error) {
       setError(error instanceof Error ? error.message : "Submission failed");
-      setIsSubmitting(false); // unlock only on failure
+      setIsSubmitting(false);
+    } finally {
+      setUploading(false);
     }
   };
 
   const getSelectedEventNames = () => {
     return selectedEvents
-      .map((id) => {
-        const event = events.find((e) => e.id === id);
-        return event?.name;
+      .map((selection) => {
+        const event = events.find((e) => e.id === selection.id);
+        const mode =
+          selection.participationMode === "team" ? " (Team)" : " (Individual)";
+        return event ? `${event.name}${mode}` : "";
       })
       .filter(Boolean)
       .join(", ");
@@ -459,12 +649,30 @@ export default function RegistrationForm() {
 
   const getSelectedEventCodes = () => {
     return selectedEvents
-      .map((id) => {
-        const event = events.find((e) => e.id === id);
-        return event?.code;
+      .map((selection) => {
+        const event = events.find((e) => e.id === selection.id);
+        const mode = selection.participationMode === "team" ? "T" : "I";
+        return event ? `${event.code}${mode}` : "";
       })
       .filter(Boolean)
       .join(", ");
+  };
+
+  const handleModeToggle = (eventId: number, mode: "individual" | "team") => {
+    const event = events.find((e) => e.id === eventId);
+    if (!event) return;
+
+    // If switching to team mode, initialize team members
+    if (mode === "team" && !teamDetails[eventId]) {
+      initializeTeamMembers(eventId, event.minTeamSize || 2);
+    }
+
+    // Update the selection
+    handleEventToggle(eventId, mode);
+  };
+
+  const removeEvent = (eventId: number) => {
+    setSelectedEvents((prev) => prev.filter((item) => item.id !== eventId));
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -474,24 +682,16 @@ export default function RegistrationForm() {
     });
   };
 
-  const isSubmitDisabled =
-    isSubmitting ||
-    loading ||
-    uploading ||
-    selectedEvents.length === 0 ||
-    !paymentReceipt;
-
   // Generate UPI payment string
   const generateUPIString = () => {
     const config = {
       amount: totalAmount,
       upiId: "7498980121@ybl",
       name: "College Events",
-      // message: `Registration for ${selectedEvents.length} event(s) - Token: ${registrationToken}`,
     };
 
     return `upi://pay?pa=${config.upiId}&pn=${encodeURIComponent(
-      config.name
+      config.name,
     )}&am=${config.amount}&cu=INR`;
   };
 
@@ -529,72 +729,246 @@ export default function RegistrationForm() {
           </motion.div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-1 gap-8">
-          {/* Left Column: Registration Form */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.1 }}
-            className="bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm border border-white/10 rounded-2xl p-8"
-          >
-            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-              <User className="w-6 h-6 text-yellow-400" />
-              Personal Information
-            </h2>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left Column: Events List */}
+          <div className="lg:col-span-2">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm border border-white/10 rounded-2xl p-6"
+            >
+              <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                <Calendar className="w-6 h-6 text-yellow-400" />
+                Available Events
+              </h2>
 
-            {!submitted ? (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Name */}
-                <div>
-                  <label className="block text-white/70 text-sm mb-2">
-                    Full Name *
-                  </label>
-                  <div className="relative">
-                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                      <User className="w-5 h-5 text-white/50" />
+              <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
+                {events.map((event) => {
+                  const isSelected = selectedEvents.some(
+                    (se) => se.id === event.id,
+                  );
+                  const selectedMode = selectedEvents.find(
+                    (se) => se.id === event.id,
+                  )?.participationMode;
+
+                  return (
+                    <div
+                      key={event.id}
+                      className={`p-4 rounded-xl border transition-all duration-300 ${
+                        isSelected
+                          ? "bg-gradient-to-r from-blue-500/20 to-purple-500/20 border-blue-500/30"
+                          : "bg-white/5 border-white/10"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div className="text-white font-medium">
+                            {event.name}
+                          </div>
+                          <div className="text-xs px-2 py-1 bg-white/10 rounded">
+                            Event {event.code}
+                          </div>
+                        </div>
+                        <div className="text-yellow-400 font-bold">
+                          ₹
+                          {event.individualPrice > 0
+                            ? `${event.individualPrice} (Ind)`
+                            : ""}
+                          {event.teamPrice > 0
+                            ? ` / ₹${event.teamPrice} (Team)`
+                            : ""}
+                        </div>
+                      </div>
+
+                      <div className="text-white/60 text-sm mb-4">
+                        {event.description}
+                      </div>
+
+                      <div className="flex items-center gap-4 mb-3">
+                        {event.allowedModes.includes("individual") && (
+                          <button
+                            onClick={() =>
+                              handleModeToggle(event.id, "individual")
+                            }
+                            className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-colors ${
+                              isSelected && selectedMode === "individual"
+                                ? "bg-blue-500 text-white"
+                                : "bg-white/10 text-white/70 hover:bg-white/20"
+                            }`}
+                          >
+                            <UserCircle className="w-4 h-4" />
+                            Individual
+                            <span className="text-xs">
+                              (₹{event.individualPrice})
+                            </span>
+                          </button>
+                        )}
+
+                        {event.allowedModes.includes("team") && (
+                          <button
+                            onClick={() => handleModeToggle(event.id, "team")}
+                            className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-colors ${
+                              isSelected && selectedMode === "team"
+                                ? "bg-purple-500 text-white"
+                                : "bg-white/10 text-white/70 hover:bg-white/20"
+                            }`}
+                          >
+                            <Users className="w-4 h-4" />
+                            Team
+                            <span className="text-xs">
+                              (₹{event.teamPrice})
+                            </span>
+                          </button>
+                        )}
+                      </div>
+
+                      {isSelected &&
+                        selectedMode === "team" &&
+                        teamDetails[event.id] && (
+                          <div className="mt-4 p-4 bg-white/5 rounded-lg border border-white/10">
+                            <div className="flex items-center justify-between mb-3">
+                              <h4 className="text-white font-medium flex items-center gap-2">
+                                <Users className="w-4 h-4" />
+                                Team Members ({teamDetails[event.id].length})
+                                {event.minTeamSize && event.maxTeamSize && (
+                                  <span className="text-xs text-white/60">
+                                    ({event.minTeamSize}-{event.maxTeamSize}{" "}
+                                    members)
+                                  </span>
+                                )}
+                              </h4>
+
+                              {teamDetails[event.id].length <
+                                (event.maxTeamSize || 4) && (
+                                <button
+                                  type="button"
+                                  onClick={() => addTeamMember(event.id)}
+                                  className="p-1 bg-green-500/20 hover:bg-green-500/30 rounded-lg"
+                                >
+                                  <Plus className="w-4 h-4 text-green-400" />
+                                </button>
+                              )}
+                            </div>
+
+                            <div className="space-y-2">
+                              {teamDetails[event.id].map((member, index) => (
+                                <div
+                                  key={index}
+                                  className="flex items-center gap-2"
+                                >
+                                  <input
+                                    type="text"
+                                    value={member}
+                                    onChange={(e) =>
+                                      updateTeamMember(
+                                        event.id,
+                                        index,
+                                        e.target.value,
+                                      )
+                                    }
+                                    placeholder={`Team member ${index + 1} name`}
+                                    className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded text-white placeholder-white/50"
+                                    required={index < (event.minTeamSize || 2)}
+                                  />
+                                  {index >= (event.minTeamSize || 2) && (
+                                    <button
+                                      type="button"
+                                      onClick={() =>
+                                        removeTeamMember(event.id, index)
+                                      }
+                                      className="p-2 bg-red-500/20 hover:bg-red-500/30 rounded-lg"
+                                    >
+                                      <Minus className="w-4 h-4 text-red-400" />
+                                    </button>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                      <div className="flex justify-between items-center mt-4">
+                        <div className="text-white/60 text-sm">
+                          {event.allowedModes.includes("individual") && (
+                            <span>
+                              Individual: {event.currentIndividuals || 0}/
+                              {event.maxIndividuals || "∞"}
+                            </span>
+                          )}
+                          {event.allowedModes.includes("team") && (
+                            <span className="ml-3">
+                              Teams: {event.currentTeams || 0}/
+                              {event.maxTeams || "∞"}
+                            </span>
+                          )}
+                        </div>
+
+                        {isSelected && (
+                          <button
+                            type="button"
+                            onClick={() => removeEvent(event.id)}
+                            className="px-3 py-1 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg text-sm"
+                          >
+                            Remove
+                          </button>
+                        )}
+                      </div>
                     </div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Right Column: Registration Form, QR Code, and Upload */}
+          <div>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="space-y-8"
+            >
+              {/* Personal Information */}
+              <div className="bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
+                <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                  <User className="w-6 h-6 text-yellow-400" />
+                  Personal Information
+                </h2>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-white/70 text-sm mb-2">
+                      Full Name *
+                    </label>
                     <input
                       type="text"
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-transparent"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-transparent"
                       placeholder="Enter your full name"
                     />
                   </div>
-                </div>
 
-                {/* Email */}
-                <div>
-                  <label className="block text-white/70 text-sm mb-2">
-                    Email Address *
-                  </label>
-                  <div className="relative">
-                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                      <Mail className="w-5 h-5 text-white/50" />
-                    </div>
+                  <div>
+                    <label className="block text-white/70 text-sm mb-2">
+                      Email Address *
+                    </label>
                     <input
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-transparent"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-transparent"
                       placeholder="your@email.com"
                     />
                   </div>
-                </div>
 
-                {/* Mobile Number */}
-                <div>
-                  <label className="block text-white/70 text-sm mb-2">
-                    Mobile Number *
-                  </label>
-                  <div className="relative">
-                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                      <Phone className="w-5 h-5 text-white/50" />
-                    </div>
+                  <div>
+                    <label className="block text-white/70 text-sm mb-2">
+                      Mobile Number *
+                    </label>
                     <input
                       type="tel"
                       name="mobile"
@@ -602,513 +976,280 @@ export default function RegistrationForm() {
                       onChange={handleInputChange}
                       required
                       pattern="[0-9]{10}"
-                      className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-transparent"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-transparent"
                       placeholder="9876543210"
                     />
                   </div>
-                </div>
 
-                {/* College ID (Optional) */}
-                <div>
-                  <label className="block text-white/70 text-sm mb-2">
-                    College Name
-                  </label>
-                  <input
-                    type="text"
-                    name="collegeId"
-                    value={formData.collegeId}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-transparent"
-                    placeholder="Enter your college Name"
-                  />
-                </div>
-                <div>
-                  <label className="block text-white/70 text-sm mb-2">
-                    Graduation Type *
-                  </label>
-
-                  <div className="flex gap-6">
-                    {/* UG */}
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="graduationType"
-                        value="UG"
-                        checked={formData.graduationType === "UG"}
-                        onChange={handleInputChange}
-                        className="h-4 w-4 text-yellow-500 focus:ring-yellow-500"
-                        required
-                      />
-                      <span className="text-white">UG</span>
+                  <div>
+                    <label className="block text-white/70 text-sm mb-2">
+                      College Name
                     </label>
+                    <input
+                      type="text"
+                      name="collegeId"
+                      value={formData.collegeId}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-transparent"
+                      placeholder="Enter your college name"
+                    />
+                  </div>
 
-                    {/* PG */}
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="graduationType"
-                        value="PG"
-                        checked={formData.graduationType === "PG"}
-                        onChange={handleInputChange}
-                        className="h-4 w-4 text-yellow-500 focus:ring-yellow-500"
-                        required
-                      />
-                      <span className="text-white">PG</span>
+                  <div>
+                    <label className="block text-white/70 text-sm mb-2">
+                      Graduation Type *
                     </label>
+                    <div className="flex gap-4">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="graduationType"
+                          value="UG"
+                          checked={formData.graduationType === "UG"}
+                          onChange={handleInputChange}
+                          className="h-4 w-4 text-yellow-500 focus:ring-yellow-500"
+                          required
+                        />
+                        <span className="text-white">UG</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="graduationType"
+                          value="PG"
+                          checked={formData.graduationType === "PG"}
+                          onChange={handleInputChange}
+                          className="h-4 w-4 text-yellow-500 focus:ring-yellow-500"
+                          required
+                        />
+                        <span className="text-white">PG</span>
+                      </label>
+                    </div>
                   </div>
                 </div>
+              </div>
 
-                {/* Events Selection */}
-                <div className="pt-6 border-t border-white/10">
-                  <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-pink-400" />
-                    Select Events (₹100 per event)
+              {/* Selected Events Summary */}
+              {selectedEvents.length > 0 && (
+                <div className="bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
+                  <h3 className="text-xl font-bold text-white mb-4">
+                    Selected Events ({selectedEvents.length})
                   </h3>
-                  <p className="text-white/60 text-sm mb-4">
-                    Choose the events you want to participate in
-                  </p>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {events.map((event) => {
-                      const isSelected = selectedEvents.includes(event.id);
-                      const isFull =
-                        event.currentParticipants >= event.maxParticipants;
+                  <div className="space-y-3 mb-4">
+                    {selectedEvents.map((selection) => {
+                      const event = events.find((e) => e.id === selection.id);
+                      if (!event) return null;
 
                       return (
                         <div
-                          key={event.id}
-                          className={`p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
-                            isSelected
-                              ? "bg-gradient-to-r from-blue-500/20 to-purple-500/20 border-blue-500/30"
-                              : "bg-white/5 border-white/10 hover:bg-white/10"
-                          } ${isFull ? "opacity-50 cursor-not-allowed" : ""}`}
-                          onClick={() => !isFull && handleEventToggle(event.id)}
+                          key={selection.id}
+                          className="flex items-center justify-between p-3 bg-white/5 rounded-lg"
                         >
-                          <div className="flex items-center gap-3">
-                            <div
-                              className={`w-5 h-5 rounded border flex items-center justify-center ${
-                                isSelected
-                                  ? "bg-blue-500 border-blue-500"
-                                  : "border-white/30"
-                              }`}
-                            >
-                              {isSelected && (
-                                <CheckCircle className="w-3 h-3 text-white" />
-                              )}
+                          <div>
+                            <div className="text-white font-medium">
+                              {event.name}
                             </div>
-                            <div className="flex-1">
-                              <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-2">
-                                  <div className="font-medium text-white">
-                                    {event.name}
-                                  </div>
-                                  <div className="text-xs px-2 py-1 bg-white/10 rounded">
-                                    Event {event.code}
-                                  </div>
-                                </div>
-                                <div className="text-yellow-400 font-bold">
-                                  ₹{event.price}
-                                </div>
-                              </div>
-                              <div className="text-white/60 text-sm mt-1">
-                                {event.description}
-                              </div>
-                              {/* <div className="flex items-center gap-2 mt-2">
-                                <div className="flex-1 h-1 bg-white/10 rounded-full overflow-hidden">
-                                  <div
-                                    className="h-full bg-gradient-to-r from-green-500 to-blue-500 rounded-full"
-                                    style={{
-                                      width: `${
-                                        (event.currentParticipants /
-                                          event.maxParticipants) *
-                                        100
-                                      }%`,
-                                    }}
-                                  />
-                                </div>
-                                <div className="text-white/50 text-xs">
-                                  {event.currentParticipants}/
-                                  {event.maxParticipants}
-                                </div>
-                              </div>
-                              {isFull && (
-                                <div className="text-red-400 text-xs mt-2 flex items-center gap-1">
-                                  <AlertCircle className="w-3 h-3" />
-                                  Event Full
-                                </div>
-                              )} */}
+                            <div className="text-white/60 text-sm">
+                              {selection.participationMode === "team"
+                                ? `Team (${selection.teamSize} members)`
+                                : "Individual"}
                             </div>
+                          </div>
+                          <div className="text-yellow-400 font-bold">
+                            ₹
+                            {selection.participationMode === "team"
+                              ? event.teamPrice
+                              : event.individualPrice}
                           </div>
                         </div>
                       );
                     })}
                   </div>
 
-                  {/* Selection Summary */}
-                  <div className="mt-6 p-4 bg-gradient-to-r from-yellow-500/10 to-pink-500/10 rounded-xl border border-yellow-500/20">
-                    <div className="grid grid-cols-2 gap-4 mb-4">
-                      <div>
-                        <div className="text-white/70 text-sm mb-1">
-                          Selected Events:
-                        </div>
-                        <div className="text-white font-bold">
-                          {selectedEvents.length} events
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-white/70 text-sm mb-1">
-                          Event Codes:
-                        </div>
-                        <div className="text-blue-400 font-bold">
-                          {getSelectedEventCodes() || "None"}
-                        </div>
-                      </div>
-                    </div>
+                  <div className="pt-4 border-t border-white/10">
                     <div className="flex items-center justify-between">
-                      <div className="text-white/70">Total Amount:</div>
+                      <div className="text-white font-bold">Total Amount:</div>
                       <div className="text-2xl font-bold text-yellow-400">
                         ₹{totalAmount}
                       </div>
                     </div>
-                    {/* {selectedEvents.length > 0 && registrationToken && (
-                      <div className="mt-4 pt-4 border-t border-white/10">
-                        <div className="text-white/70 text-sm mb-1">
-                          Registration Token:
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="font-mono text-lg font-bold text-green-400 bg-white/5 px-3 py-1 rounded">
-                            {registrationToken}
-                          </div>
-                          <button
-                            type="button"
-                            onClick={copyTokenToClipboard}
-                            className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-                            title="Copy token"
-                          >
-                            <Copy
-                              className={`w-4 h-4 ${
-                                copied ? "text-green-400" : "text-white/60"
-                              }`}
-                            />
-                          </button>
-                        </div>
-                        <div className="text-white/50 text-xs mt-1">
-                          MCGK2026
-                          <span className="text-yellow-400">
-                            {selectedEvents.length.toString().padStart(2, "0")}
-                          </span>
-                          XXX
-                        </div>
-                      </div>
-                    )} */}
                   </div>
                 </div>
+              )}
 
-                {/* QR Code Display */}
-                <div className="bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
-                  <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                    <QrCode className="w-6 h-6 text-purple-400" />
+              {/* QR Code Payment */}
+              {selectedEvents.length > 0 && (
+                <div className="bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
+                  <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                    <QrCode className="w-5 h-5 text-purple-400" />
                     Payment QR Code
-                  </h2>
+                  </h3>
 
-                  {selectedEvents.length > 0 ? (
-                    <div className="space-y-6">
-                      {/* QR Code */}
-                      <div className="flex flex-col items-center justify-center p-8 bg-white/5 rounded-2xl border border-white/10">
-                        <div className="p-4 bg-white rounded-xl mb-4">
-                          <QRCodeCanvas
-                            value={generateUPIString()}
-                            size={200}
-                            level="H"
-                            includeMargin={true}
-                            fgColor="#1e293b"
-                            bgColor="#ffffff"
-                          />
-                        </div>
-                        <div className="text-center">
-                          <div className="text-3xl font-bold text-yellow-400 mb-2">
-                            ₹{totalAmount}
-                          </div>
-                          <div className="text-white/70 text-sm">
-                            Scan to pay via UPI
-                          </div>
-                          {/* {registrationToken && (
-                            <div className="mt-2 text-white/50 text-xs">
-                              Token: {registrationToken}
-                            </div>
-                          )} */}
-                        </div>
+                  <div className="flex flex-col items-center justify-center p-6 bg-white/5 rounded-xl border border-white/10 mb-4">
+                    <div className="p-4 bg-white rounded-xl mb-4">
+                      <QRCodeCanvas
+                        value={generateUPIString()}
+                        size={180}
+                        level="H"
+                        includeMargin={true}
+                        fgColor="#1e293b"
+                        bgColor="#ffffff"
+                      />
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-yellow-400 mb-2">
+                        ₹{totalAmount}
                       </div>
-
-                      {/* Payment Details */}
-                      <div className="space-y-4">
-                        <div className="flex items-center justify-between">
-                          <div className="text-white/70">Selected Events</div>
-                          <div className="text-white font-medium">
-                            {selectedEvents.length} events
-                          </div>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div className="text-white/70">Price per Event</div>
-                          <div className="text-white font-medium">₹100</div>
-                        </div>
-                        <div className="h-px bg-white/10"></div>
-                        <div className="flex items-center justify-between">
-                          <div className="text-white font-bold">
-                            Total Amount
-                          </div>
-                          <div className="text-2xl font-bold text-yellow-400">
-                            ₹{totalAmount}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Token Info */}
-                      {registrationToken && (
-                        <div className="p-4 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-xl border border-green-500/20">
-                          <h4 className="text-white font-bold mb-2">
-                            Token Information
-                          </h4>
-                          <div className="space-y-2">
-                            <div className="flex items-center justify-between">
-                              <span className="text-white/70">
-                                College Code:
-                              </span>
-                              <span className="text-white font-mono">MCGK</span>
-                            </div>
-                            <div className="flex items-center justify-between">
-                              <span className="text-white/70">Year:</span>
-                              <span className="text-white font-mono">2026</span>
-                            </div>
-                            <div className="flex items-center justify-between">
-                              <span className="text-white/70">
-                                Event Count:
-                              </span>
-                              <span className="text-yellow-400 font-mono">
-                                {selectedEvents.length
-                                  .toString()
-                                  .padStart(2, "0")}
-                              </span>
-                            </div>
-                            {/* <div className="flex items-center justify-between">
-                              <span className="text-white/70">
-                                Participant #:
-                              </span>
-                              <span className="text-green-400 font-mono">
-                                {registrationToken.slice(-3)}
-                              </span>
-                            </div> */}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Payment Instructions */}
-                      <div className="p-4 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl border border-blue-500/20">
-                        <h4 className="text-white font-bold mb-2">
-                          Payment Instructions:
-                        </h4>
-                        <ul className="text-white/70 text-sm space-y-2">
-                          <li className="flex items-start gap-2">
-                            <div className="w-1 h-1 bg-white/50 rounded-full mt-2"></div>
-                            Scan the QR code with any UPI app
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <div className="w-1 h-1 bg-white/50 rounded-full mt-2"></div>
-                            Verify the amount before payment
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <div className="w-1 h-1 bg-white/50 rounded-full mt-2"></div>
-                            Save payment screenshot as receipt
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <div className="w-1 h-1 bg-white/50 rounded-full mt-2"></div>
-                            Upload receipt after successful payment
-                          </li>
-                          {/* <li className="flex items-start gap-2">
-                            <div className="w-1 h-1 bg-white/50 rounded-full mt-2"></div>
-                            Mention token {registrationToken} in payment note if
-                            possible
-                          </li> */}
-                        </ul>
+                      <div className="text-white/70 text-sm">
+                        Scan to pay via UPI
                       </div>
                     </div>
-                  ) : (
-                    <div className="text-center py-12">
-                      <div className="inline-flex items-center justify-center w-20 h-20 bg-white/5 rounded-full mb-6">
-                        <QrCode className="w-10 h-10 text-white/30" />
-                      </div>
-                      <h3 className="text-xl font-bold text-white mb-2">
-                        Select Events to Generate QR Code
-                      </h3>
-                      <p className="text-white/60">
-                        Choose events from the form to see payment QR code
-                      </p>
-                    </div>
-                  )}
-                </div>
+                  </div>
 
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="space-y-8"
-                >
-                  {/* Payment Receipt Upload */}
-                  <div className="pt-6 border-t border-white/10">
-                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                      <Upload className="w-5 h-5 text-green-400" />
-                      Upload Payment Receipt
-                    </h3>
-                    <p className="text-white/60 text-sm mb-4">
-                      Upload screenshot of payment confirmation
+                  <div className="text-white/60 text-sm">
+                    <p className="mb-2">UPI ID: 7498980121@ybl</p>
+                    <p>
+                      After payment, please upload the transaction screenshot
+                      below.
                     </p>
+                  </div>
+                </div>
+              )}
 
-                    <Dropzone
-                      onDrop={handleDrop}
-                      accept={{
-                        "image/*": [".jpeg", ".jpg", ".png"],
-                        "application/pdf": [".pdf"],
-                      }}
-                      maxSize={5 * 1024 * 1024} // 5MB
-                      disabled={uploading}
-                    >
-                      {({ getRootProps, getInputProps, isDragActive }) => (
-                        <div
-                          {...getRootProps()}
-                          className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-300 ${
-                            isDragActive
-                              ? "border-yellow-400 bg-yellow-500/10"
-                              : "border-white/20 hover:border-yellow-400 hover:bg-white/5"
-                          } ${
-                            uploading ? "opacity-50 cursor-not-allowed" : ""
-                          }`}
-                        >
-                          <input {...getInputProps()} />
-                          {uploading ? (
-                            <div className="flex flex-col items-center">
-                              <Loader2 className="w-12 h-12 text-yellow-400 animate-spin mb-4" />
-                              <p className="text-white">Uploading...</p>
-                            </div>
-                          ) : paymentReceipt ? (
-                            <div className="relative">
-                              {receiptPreview ? (
-                                <div className="relative mx-auto w-48 h-48 rounded-lg overflow-hidden border border-white/20">
-                                  <img
-                                    src={receiptPreview}
-                                    alt="Receipt preview"
-                                    className="w-full h-full object-contain"
-                                  />
-                                </div>
-                              ) : (
-                                <div className="p-4 bg-white/5 rounded-lg">
-                                  <div className="text-white font-medium mb-2">
-                                    {paymentReceipt.name}
-                                  </div>
-                                  <div className="text-white/60 text-sm">
-                                    {(paymentReceipt.size / 1024).toFixed(2)} KB
-                                  </div>
-                                </div>
-                              )}
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  removeReceipt();
-                                }}
-                                className="absolute -top-2 -right-2 p-1 bg-red-500 hover:bg-red-600 rounded-full"
-                              >
-                                <X className="w-4 h-4 text-white" />
-                              </button>
-                            </div>
-                          ) : (
-                            <div className="space-y-4">
-                              <Upload className="w-12 h-12 text-white/50 mx-auto" />
-                              <div>
-                                <p className="text-white font-medium mb-2">
-                                  {isDragActive
-                                    ? "Drop the file here"
-                                    : "Drag & drop payment receipt"}
-                                </p>
-                                <p className="text-white/60 text-sm">
-                                  or click to select file
-                                </p>
+              {/* Payment Receipt Upload - ADDED HERE */}
+              {selectedEvents.length > 0 && (
+                <div className="bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
+                  <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                    <Upload className="w-5 h-5 text-green-400" />
+                    Upload Payment Receipt
+                  </h3>
+                  <p className="text-white/60 text-sm mb-4">
+                    Upload screenshot of your payment confirmation
+                  </p>
+
+                  <Dropzone
+                    onDrop={handleDrop}
+                    accept={{
+                      "image/*": [".jpeg", ".jpg", ".png"],
+                      "application/pdf": [".pdf"],
+                    }}
+                    maxSize={5 * 1024 * 1024} // 5MB
+                    disabled={uploading}
+                  >
+                    {({ getRootProps, getInputProps, isDragActive }) => (
+                      <div
+                        {...getRootProps()}
+                        className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-300 ${
+                          isDragActive
+                            ? "border-yellow-400 bg-yellow-500/10"
+                            : "border-white/20 hover:border-yellow-400 hover:bg-white/5"
+                        } ${uploading ? "opacity-50 cursor-not-allowed" : ""}`}
+                      >
+                        <input {...getInputProps()} />
+                        {uploading ? (
+                          <div className="flex flex-col items-center">
+                            <Loader2 className="w-12 h-12 text-yellow-400 animate-spin mb-4" />
+                            <p className="text-white">Uploading...</p>
+                          </div>
+                        ) : paymentReceipt ? (
+                          <div className="relative">
+                            {receiptPreview ? (
+                              <div className="relative mx-auto w-48 h-48 rounded-lg overflow-hidden border border-white/20">
+                                <img
+                                  src={receiptPreview}
+                                  alt="Receipt preview"
+                                  className="w-full h-full object-contain"
+                                />
                               </div>
-                              <p className="text-white/50 text-xs">
-                                Supports: JPG, PNG, PDF (Max 5MB)
+                            ) : (
+                              <div className="p-4 bg-white/5 rounded-lg">
+                                <div className="text-white font-medium mb-2">
+                                  {paymentReceipt.name}
+                                </div>
+                                <div className="text-white/60 text-sm">
+                                  {(paymentReceipt.size / 1024).toFixed(2)} KB
+                                </div>
+                              </div>
+                            )}
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                removeReceipt();
+                              }}
+                              className="absolute -top-2 -right-2 p-1 bg-red-500 hover:bg-red-600 rounded-full"
+                            >
+                              <X className="w-4 h-4 text-white" />
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="space-y-4">
+                            <Upload className="w-12 h-12 text-white/50 mx-auto" />
+                            <div>
+                              <p className="text-white font-medium mb-2">
+                                {isDragActive
+                                  ? "Drop the file here"
+                                  : "Drag & drop payment receipt"}
+                              </p>
+                              <p className="text-white/60 text-sm">
+                                or click to select file
                               </p>
                             </div>
-                          )}
-                        </div>
-                      )}
-                    </Dropzone>
-                  </div>
+                            <p className="text-white/50 text-xs">
+                              Supports: JPG, PNG, PDF (Max 5MB)
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </Dropzone>
+                </div>
+              )}
 
-                  {/* Important Notes */}
-                  <div className="bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
-                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                      <AlertCircle className="w-5 h-5 text-yellow-400" />
-                      Important Notes
-                    </h3>
-                    <ul className="space-y-3 text-white/70">
-                      <li className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-2"></div>
-                        <span>
-                          Each event costs ₹100. Select multiple events to pay
-                          combined amount.
-                        </span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-2"></div>
-                        <span>
-                          <strong>Registration Token:</strong> MCGK2026
-                          <span className="text-yellow-400">XX</span>
-                          <span className="text-green-400">YYY</span>
-                        </span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-2"></div>
-                        <span>XX = Number of selected events (01-06)</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-2"></div>
-                        <span>YYY = Your unique participant number</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-2"></div>
-                        <span>Save your token - required for event entry</span>
-                      </li>
-                    </ul>
-                  </div>
-                </motion.div>
-                {/* Submit Button */}
+              {/* Submit Button */}
+              {selectedEvents.length > 0 && (
                 <button
-                  type="submit"
-                  disabled={isSubmitDisabled}
-                  className={`w-full py-3 rounded-lg font-bold transition-all duration-300 flex items-center justify-center gap-2 ${
-                    isSubmitting || loading || uploading
+                  onClick={handleSubmit}
+                  disabled={isSubmitting || uploading || !paymentReceipt}
+                  className={`w-full py-4 rounded-xl font-bold transition-all duration-300 ${
+                    isSubmitting || uploading || !paymentReceipt
                       ? "bg-white/10 text-white/50 cursor-not-allowed"
                       : "bg-gradient-to-r from-yellow-500 to-pink-500 hover:from-yellow-600 hover:to-pink-600 text-white hover:scale-105"
                   }`}
                 >
-                  {isSubmitting || loading ? (
+                  {isSubmitting ? (
                     <>
-                      <Loader2 className="w-5 h-5 animate-spin" />
+                      <Loader2 className="w-5 h-5 animate-spin inline mr-2" />
                       Processing...
                     </>
-                  ) : (
+                  ) : uploading ? (
                     <>
-                      <CreditCard className="w-5 h-5" />
-                      Submit Registration
+                      <Loader2 className="w-5 h-5 animate-spin inline mr-2" />
+                      Uploading...
                     </>
+                  ) : (
+                    "Submit Registration"
                   )}
                 </button>
-              </form>
-            ) : (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="text-center py-8"
-              >
+              )}
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Success Modal */}
+        {submitted && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="bg-gradient-to-br from-slate-800 to-purple-900 rounded-2xl p-8 max-w-md w-full border border-white/10"
+            >
+              <div className="text-center">
                 <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-full mb-6">
                   <CheckCircle className="w-10 h-10 text-green-400" />
                 </div>
@@ -1116,86 +1257,44 @@ export default function RegistrationForm() {
                   Registration Successful!
                 </h3>
                 <p className="text-white/70 mb-6">
-                  Your registration has been submitted for verification
+                  Your registration has been submitted for verification. We will
+                  verify your payment and send confirmation email within 24
+                  hours.
                 </p>
 
-                {/* <div className="bg-white/5 p-6 rounded-xl mb-6">
-                  <div className="space-y-4">
-                    <div className="text-center">
-                      <div className="text-white/60 text-sm mb-2">
-                        Your Registration Token
-                      </div>
-                      <div className="flex items-center justify-center gap-2">
-                        <div className="font-mono text-2xl font-bold text-green-400 bg-white/10 px-4 py-2 rounded-lg">
-                          {registrationToken}
-                        </div>
-                        <button
-                          onClick={copyTokenToClipboard}
-                          className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-                          title="Copy token"
-                        >
-                          <Copy
-                            className={`w-5 h-5 ${
-                              copied ? "text-green-400" : "text-white/60"
-                            }`}
-                          />
-                        </button>
-                      </div>
-                      <div className="text-white/50 text-sm mt-2">
-                        Keep this token safe for future reference
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4 mt-6">
-                      <div>
-                        <div className="text-white/60 text-sm mb-1">
-                          Selected Events
-                        </div>
-                        <div className="text-white font-medium">
-                          {selectedEvents.length} events
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-white/60 text-sm mb-1">
-                          Total Amount
-                        </div>
-                        <div className="text-yellow-400 font-bold">
-                          ₹{totalAmount}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="pt-4 border-t border-white/10">
-                      <div className="text-white/60 text-sm mb-2">
-                        Token Breakdown
-                      </div>
-                      <div className="flex items-center justify-center gap-1 text-sm">
-                        <span className="text-white">MCGK</span>
-                        <span className="text-white">2026</span>
-                        <span className="text-yellow-400">
-                          {selectedEvents.length.toString().padStart(2, "0")}
-                        </span>
-                        <span className="text-green-400">
-                          {registrationToken.slice(-3)}
-                        </span>
-                      </div>
-                      <div className="text-white/50 text-xs mt-2">
-                        College | Year | Events | Participant #
-                      </div>
-                    </div>
+                <div className="bg-white/5 p-4 rounded-lg mb-6">
+                  <div className="text-white/60 text-sm mb-2">
+                    Registration Token
                   </div>
-                </div> */}
+                  <div className="font-mono text-lg font-bold text-green-400">
+                    {registrationToken}
+                  </div>
+                </div>
 
-                <p className="text-white/60 text-sm">
-                  We will verify your payment and send confirmation email within
-                  24 hours
-                </p>
-              </motion.div>
-            )}
+                <button
+                  onClick={() => {
+                    setSubmitted(false);
+                    // Reset form
+                    setFormData({
+                      name: "",
+                      email: "",
+                      mobile: "",
+                      collegeId: "",
+                      graduationType: "",
+                    });
+                    setSelectedEvents([]);
+                    setPaymentReceipt(null);
+                    setReceiptPreview(null);
+                    setTeamDetails({});
+                  }}
+                  className="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-bold rounded-lg"
+                >
+                  Register Another
+                </button>
+              </div>
+            </motion.div>
           </motion.div>
-
-          {/* Right Column: QR Code & Payment Details */}
-        </div>
+        )}
 
         {/* Footer */}
         <motion.div
@@ -1210,14 +1309,14 @@ export default function RegistrationForm() {
           <p className="text-white/80">
             Email:{" "}
             <a
-              href="mailto:events@college.edu"
+              href="mailto:moderngk2026@gmail.com"
               className="text-yellow-400 hover:underline"
             >
               moderngk2026@gmail.com
             </a>{" "}
             | Phone:{" "}
             <a
-              href="tel:+911234567890"
+              href="tel:+917038622958"
               className="text-yellow-400 hover:underline"
             >
               +91 7038622958

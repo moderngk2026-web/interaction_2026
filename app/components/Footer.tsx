@@ -46,15 +46,14 @@ export default function Footer() {
                 <span className="font-bold text-white">I</span>
               </div>
               <div>
-                <h3 className="text-2xl font-bold">Interaction</h3>
+                <h3 className="text-2xl font-bold">YUVAAN</h3>
                 <p className="text-sm text-gray-400">2026</p>
               </div>
             </div>
 
             <p className="text-gray-400 text-sm">
               Annual intercollegiate event which is organised by the department
-              of computer science modern college Ganesh khind to bring
-              students together
+              of computer science Indira University to bring students together
             </p>
 
             {/* Social Links */}
@@ -105,7 +104,7 @@ export default function Footer() {
                 <div>
                   <div className="font-medium">Date</div>
                   <div className="text-gray-400 text-sm">
-                    January 09-10, 2026
+                    February 26-27, 2026
                   </div>
                 </div>
               </li>
@@ -114,9 +113,10 @@ export default function Footer() {
                 <div>
                   <div className="font-medium">Venue</div>
                   <div className="text-gray-400 text-sm">
-                    Modern College, Ganeshkhind
+                    S.No. 64,65, Gat No. 276 At Post: Parandwadi, Near Somatne
+                    phata, Tal.: Maval, Dist.
                   </div>
-                  <div className="text-gray-400 text-sm">Pune - 411016</div>
+                  <div className="text-gray-400 text-sm"> Pune – 410 506</div>
                 </div>
               </li>
               <li className="flex items-start gap-3">
@@ -158,7 +158,7 @@ export default function Footer() {
                   allowFullScreen={true}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Modern College of Arts, Science and Commerce Location"
+                  title="Indira University"
                   className="w-full h-48 md:h-52"
                 />
               </div>
@@ -166,13 +166,12 @@ export default function Footer() {
               {/* Address */}
               <div className="bg-gray-800/50 rounded-lg p-3">
                 <p className="text-gray-300 text-sm">
-                  <strong className="text-white">Modern College</strong>
+                  <strong className="text-white">Indira University</strong>
                   <br />
-                  Ganeshkhind Road
+                  S.No. 64,65, Gat No. 276 At Post: Parandwadi, Near Somatne
+                  phata, Tal.: Maval, Dist.
                   <br />
-                  Pune, Maharashtra 411016
-                  <br />
-                  India
+                  Pune – 410 506
                 </p>
               </div>
             </div>
@@ -188,16 +187,16 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           {/* Copyright */}
           <div className="text-gray-500 text-sm text-center md:text-left">
-            © 2026 Interaction. All rights reserved. | Organized by Department
-            of Computer Science
+            © 2026 YUVAAN. All rights reserved. | Organized by Department of
+            Computer Science
           </div>
 
           {/* College Info */}
           <div className="text-gray-400 text-xs text-center md:text-right">
-            <p>Modern College of Arts, Science & Commerce (Autonomous)</p>
-            <p className="mt-1">
+            <p>Indira University</p>
+            {/* <p className="mt-1">
               Affiliated to Savitribai Phule Pune University
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
